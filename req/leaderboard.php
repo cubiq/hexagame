@@ -6,7 +6,7 @@ header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 header('Content-type: application/json');
 
 $type = !empty($_GET['t']) ? (int)$_GET['t'] : 2;
-$requireUser = $type == 1 ? true : false;
+$requireUser = $type == 1 || $type == 3 ? true : false;
 
 $db = new PDO($config['db'], $config['dbUser'], $config['dbPassword']);
 $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
@@ -92,8 +92,8 @@ if ( $type == 1 ) {
 
 // Find user's results
 if ( $type == 3 ) {
-	$stmt = $db->prepare( "SELECT DATE_FORMAT(FROM_UNIXTIME(`time`), '%a, %b %e, %l:%i %p') AS `datetime`, `score`, `words`, `letters`, `level` FROM `scoreboards` ORDER BY `score` DESC, `words` DESC, `letters` ASC LIMIT 10" );
-	$stmt->execute();
+	$stmt = $db->prepare( "SELECT DATE_FORMAT(FROM_UNIXTIME(`time`), '%a, %b %e, %l:%i %p') AS `datetime`, `score`, `words`, `letters`, `level` FROM `scoreboards` WHERE `user_id`=:userId ORDER BY `score` DESC, `words` DESC, `letters` ASC LIMIT 10" );
+	$stmt->execute(array( ':userId' => $userId ));
 	$results = $stmt->fetchAll();
 
 	$json = array(
