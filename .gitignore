@@ -1,0 +1,7 @@
+.DS_Store
+dict/*.txt
+dict/*.php
+libs/google
+config.php
+makedist.sh
+js/hexagame-min.js

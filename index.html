@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+	<title>Hexagame, Open Source HTML5 Word Puzzle Game</title>
+
+	<link rel="stylesheet" type="text/css" href="styles/common.css?v1">
+
+	<!--script type="application/javascript" charset="utf-8" src="js/hexagame-min.js?v6"></script-->
+	<script type="application/javascript" charset="utf-8" src="js/utils.js"></script>
+	<script type="application/javascript" charset="utf-8" src="js/render.js"></script>
+	<script type="application/javascript" charset="utf-8" src="js/userinfo.js"></script>
+	<script type="application/javascript" charset="utf-8" src="js/init.js"></script>
+	<script type="application/javascript" charset="utf-8" src="js/dictionary.js"></script>
+	<script type="application/javascript" charset="utf-8" src="js/easing.js"></script>
+	<script type="application/javascript" charset="utf-8" src="js/tap.js"></script>
+	<script type="application/javascript" charset="utf-8" src="js/countdown.js"></script>
+	<script type="application/javascript" charset="utf-8" src="js/scoredriver.js"></script>
+	<script type="application/javascript" charset="utf-8" src="js/levelup.js"></script>
+	<script type="application/javascript" charset="utf-8" src="js/scoreboard.js"></script>
+	<script type="application/javascript" charset="utf-8" src="js/fireworks.js"></script>
+	<script type="application/javascript" charset="utf-8" src="js/mainmenu.js"></script>
+	<script type="application/javascript" charset="utf-8" src="js/hexmap.js"></script>
+	<script type="application/javascript" charset="utf-8" src="js/dragdrop.js"></script>
+	<script type="application/javascript" charset="utf-8" src="js/popup.js"></script>
+	<script type="application/javascript" charset="utf-8" src="js/checkpoint.js"></script>
+	<script type="application/javascript" charset="utf-8" src="js/login.js"></script>
+	<script type="application/javascript" charset="utf-8" src="js/gameover.js"></script>
+	<script type="application/javascript" charset="utf-8" src="js/hexagame.js"></script>
+	<script type="application/javascript" charset="utf-8" src="js/wordhunt.js"></script>
+	<script type="application/javascript" charset="utf-8" src="js/leaderboard.js"></script>
+
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="touch-icon-ipad.png">
+	<link rel="apple-touch-icon-precomposed" sizes="57x57" href="touch-icon-iphone.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="touch-icon-iphone@2x.png">
+	<link rel="shortcut icon" href="favicon.ico">
+</head>
+
+<body>
+	<div id="game">
+		<div id="homescreen">
+			<ul id="logo"><li class="logoH">H</li><li class="logoE">E</li><li class="logoX">X</li><li class="logoA">A</li><li class="logoG">G</li><li class="logoA">A</li><li class="logoM">M</li><li class="logoE">E</li></ul>
+
+			<div id="mainmenu">
+				<div id="gateLeft"></div>
+				<div id="gateRight"></div>
+			</div>
+
+			<div id="cache"><div class="tile empty"></div><div class="tileButton empty"></div><div id="emptyText"></div></div>
+			<div id="loginMonitor"></div>
+			<div id="versioning"></div>
+		</div>
+
+		<div id="hexagame">
+			<div id="boardwrapper">
+				<div id="boardcloth">
+					<div id="board"></div>
+					<div id="wordhunt"><div id="wordsFound"><strong>Words Found</strong><ul id="wordlist"></ul></div></div>
+				</div>
+				<div id="checkpoint"></div>
+			</div>
+
+			<div id="scoreboard">
+				<div id="sbLevel" class="field"><div>
+					<span class="label">Level</span>
+					<span class="value">1</span>
+					<div id="levelProgress"><div id="levelProgressOverlay"></div></div>
+				</div></div>
+				<div id="sbTime" class="field"><div>
+					<span class="label">Time Left</span>
+					<span id="sbTimeMin">0</span><span id="sbTimeDiv">:</span><span id="sbTimeSec">00</span>
+				</div></div>
+				<div id="sbSwaps" class="field"><div>
+					<span class="label">Available Swaps</span>
+					<ul id="swapSlots"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>
+				</div></div>
+				<div id="sbScore" class="field"><div>
+					<span class="label">Score</span>
+					<span class="value">0</span>
+				</div></div>
+				<div id="sbBonusWord" class="field"><div>
+					<span class="label">Bonus Word</span>
+					<span class="value"></span>
+				</div></div>
+				<div id="sbWords" class="field half"><div>
+					<span class="label">Words</span>
+					<span class="value">0</span>
+				</div></div>
+				<div id="sbWordLength" class="field half"><div>
+					<span class="label">Word Lg.</span>
+					<span class="value">0</span>
+				</div></div>
+			</div>
+		</div>
+
+		<div id="leaderboard">
+			<div id="chartSelect">
+				<div id="chartYou" class="switch active">Your Ranking</div>
+				<div id="chartResults" class="switch">Your Results</div>
+				<div id="chartTop10" class="switch">Top 10</div>
+			</div>
+			<div id="charts">
+				<div>
+					<div id="chartsContainer"></div>
+					<div class="button" id="chartsBack">Back to Main Menu</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="popupCloak"></div><div id="popup"><div></div></div>
+	</div>
+
+	<div id="preload"><span></span>Loading</div>
+
+<script type="text/javascript">
+
+HEXA.init();
+
+if ( window.location.href.substr(0,16) == 'http://hexaga.me' ) {
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-29678291-1']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+}
+</script>
+
+</body>
+</html>

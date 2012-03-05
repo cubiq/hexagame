@@ -1,0 +1,16 @@
+body {
+	background: url(../images/desktop/seamless-wood-small.jpg) 0 0 repeat;
+}
+
+#game {
+	top: 1px;
+	left: 0;
+}
+
+.portrait #game {
+	
+}
+
+.landscape #game {
+	
+}
