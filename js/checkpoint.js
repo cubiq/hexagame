@@ -27,7 +27,7 @@ HEXA.checkpoint = (function () {
 		}, {
 			id: 'checkpointWordLengthBonus',
 			label: 'Word Length Bonus <span>%s</span>',
-			value: function () { var value = Math.round((scoreboard.getWordLength() - 3) * 100); totalBonus += value; return value; }
+			value: function () { var value = Math.round((scoreboard.getWordLength() - 3) * 200); totalBonus += value; return value; }
 		}, {
 			id: 'checkpointTotal',
 			label: 'Total <span>%s</span>',
