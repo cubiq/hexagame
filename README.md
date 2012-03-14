@@ -145,6 +145,7 @@ You should be ready to go. If you want to add the leader boards and user login y
 2. Access the [Google API console](https://code.google.com/apis/console#access) and register you application/domain.
 3. Download the [OAuth PHP client](http://code.google.com/p/google-api-php-client/), copy the `src` directory inside the Hexagame `lib` directory and rename it `google`.
 4. Fill the `$config` variable.
+5. Change the return URL in the `login.js` file (inside the `googleSignIn` function).
 
 
 ## License

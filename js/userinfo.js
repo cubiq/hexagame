@@ -105,6 +105,10 @@ HEXA.userinfo = (function (w) {
 		w.localStorage.setItem('userinfo', w.JSON.stringify(u));
 	}
 
+	function id () {
+		return u.id;
+	}
+
 	init();
 
 	return {
@@ -118,6 +122,7 @@ HEXA.userinfo = (function (w) {
 		setScoreDelivery: setScoreDelivery,
 		getScoreDelivery: getScoreDelivery,
 		getLocale: getLocale,
-		setLocale: setLocale
+		setLocale: setLocale,
+		id: id
 	};
 })(this);

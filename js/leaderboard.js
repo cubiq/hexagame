@@ -151,7 +151,7 @@ HEXA.leaderboard = (function (w) {
 					return;
 				}
 
-				out += '<h1>' + result.title + '</h1>';
+				out += '<h1>' + utils.escapeHTML(result.title) + '</h1>';
 				out += '<table cellspacing="0" cellpadding="0"><thead><tr><th class="small">#</th><th>Player</th><th class="small">Words</th><th class="small">Ratio</th><th class="small">Level</th><th class="score">Score</th></tr></thead>';
 				out += '<tbody>';
 
@@ -187,7 +187,7 @@ HEXA.leaderboard = (function (w) {
 					return;
 				}
 
-				out += '<h1>' + result.title + '</h1>';
+				out += '<h1>' + utils.escapeHTML(result.title) + '</h1>';
 				out += '<table cellspacing="0" cellpadding="0"><thead><tr><th class="small">#</th><th>Date</th><th class="small">Words</th><th class="small">Ratio</th><th class="small">Level</th><th class="score">Score</th></tr></thead>';
 				out += '<tbody>';
 
@@ -212,7 +212,7 @@ HEXA.leaderboard = (function (w) {
 				out += '<td class="left">' + utils.escapeHTML(rows[i].datetime) + '</td>';
 			} else {
 				out += '<td>' + (+rows[i].rank) + '</td>';
-				out += '<td class="left">' + utils.escapeHTML(rows[i].name) + '</td>';
+				out += '<td class="left' + (rows[i].userId == userinfo.id() ? ' self' : '') + '">' + utils.escapeHTML(rows[i].name) + '</td>';
 			}
 			
 			out += '<td>' + (+rows[i].words) + '</td>';

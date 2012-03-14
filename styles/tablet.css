@@ -1455,8 +1455,13 @@ a:hover {
 #charts td.left {
 	text-align:left;
 }
+
 #charts td.right {
 	text-align:right;
+}
+
+#charts td.self {
+	color:#fffe76;
 }
 
 #charts td {

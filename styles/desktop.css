@@ -1362,6 +1362,10 @@ a:hover {
 	text-align:right;
 }
 
+#charts td.self {
+	color:#fffe76;
+}
+
 #charts td {
 	font-size:22px;
 }

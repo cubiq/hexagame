@@ -76,7 +76,7 @@ if ( $type == 1 ) {
 
 	$rank = floor($rank->rank / 10) * 10;
 
-	$stmt = $db->prepare( "SELECT `users`.`id`, `name`, `score`, `words`, `letters`, `level`, `rank` FROM `leaderboards`, `users` WHERE `user_id` = `users`.`id` AND `rank` >= :rank ORDER BY `rank` ASC LIMIT 10" );
+	$stmt = $db->prepare( "SELECT `users`.`id` AS `userId`, `name`, `score`, `words`, `letters`, `level`, `rank` FROM `leaderboards`, `users` WHERE `user_id` = `users`.`id` AND `rank` >= :rank ORDER BY `rank` ASC LIMIT 10" );
 	$stmt->execute(array( ':rank' => $rank ));
 	$results = $stmt->fetchAll();
 
@@ -107,7 +107,7 @@ if ( $type == 3 ) {
 }
 
 // Find top 10
-$stmt = $db->prepare( "SELECT `users`.`id`, `name`, `score`, `words`, `letters`, `level`, `rank` FROM `leaderboards`, `users` WHERE `user_id` = `users`.`id` ORDER BY `rank` ASC LIMIT 10" );
+$stmt = $db->prepare( "SELECT `users`.`id` AS `userId`, `name`, `score`, `words`, `letters`, `level`, `rank` FROM `leaderboards`, `users` WHERE `user_id` = `users`.`id` ORDER BY `rank` ASC LIMIT 10" );
 $stmt->execute(array( ':rank' => $rank ));
 $results = $stmt->fetchAll();
 
