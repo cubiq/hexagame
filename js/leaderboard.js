@@ -209,16 +209,16 @@ HEXA.leaderboard = (function (w) {
 			out += '<tr>';
 			if ( rows[i].datetime ) {
 				out += '<td>' + (i + 1) + '</td>';
-				out += '<td class="left">' + rows[i].datetime + '</td>';
+				out += '<td class="left">' + utils.escapeHTML(rows[i].datetime) + '</td>';
 			} else {
-				out += '<td>' + rows[i].rank + '</td>';
-				out += '<td class="left">' + rows[i].name + '</td>';
+				out += '<td>' + (+rows[i].rank) + '</td>';
+				out += '<td class="left">' + utils.escapeHTML(rows[i].name) + '</td>';
 			}
 			
-			out += '<td>' + rows[i].words + '</td>';
+			out += '<td>' + (+rows[i].words) + '</td>';
 			out += '<td>' + Math.round(rows[i].letters / rows[i].words * 100) / 100 + '</td>';
-			out += '<td>' + rows[i].level + '</td>';
-			out += '<td class="right">' + rows[i].score + '</td>';
+			out += '<td>' + (+rows[i].level) + '</td>';
+			out += '<td class="right">' + utils.formatNumber(+rows[i].score) + '</td>';
 			out += '</tr>';
 		}
 

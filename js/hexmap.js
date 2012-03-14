@@ -9,6 +9,8 @@ HEXA.hexmap = (function () {
 		boardEl,
 		
 		tiles = [],
+
+		vowelsCount,
 		
 		rose = [
 			{ x: -1,	y: -1,	dir: 'NW' },
@@ -28,11 +30,14 @@ HEXA.hexmap = (function () {
 			distanceY = parms.tileHeight,
 			tile,
 			special,
+			vowels = dict.getVowels().join(''),
 			countQ = 0;
 		
 		gameEl = $.id('game');
 		boardWrapperEl = $.id('boardwrapper');
 		boardEl = $.id('board');
+
+		vowelsCount = 0;
 
 		utils.bind(window, 'orientationchange', orientationChange);
 
@@ -47,9 +52,17 @@ HEXA.hexmap = (function () {
 
 				tile = {};
 				tile.el = el;
-				tile.special = !special ? !utils.rnd(parms.mapWidth * parms.mapHeight) : false;
-				special = special || tile.special;
-				tile.variant = tile.special ? 4 : utils.rnd(1, 3);
+				tile.special = false;
+				if ( !special ) {
+					special = utils.rnd(parms.mapWidth * parms.mapHeight) + 1;
+					if ( special == 1 || special == 2 ) {
+						tile.special = special;
+						special = true;
+					} else {
+						special = false;
+					}
+				}
+				tile.variant = tile.special ? tile.special + 3 : utils.rnd(1, 3);
 				tile.letter = !utils.rnd(Math.round(parms.mapWidth * parms.mapHeight * 1.7)) ? 63 : dict.getLetter();
 
 				tiles[x][y] = tile;
@@ -74,10 +87,11 @@ HEXA.hexmap = (function () {
 					countQ++;
 				}
 
-				while (checkDuplicates(x, y)) {
+				while ( checkDuplicates(x, y) ) {
 					tiles[x][y].letter = dict.getLetter();
 				}
 				tiles[x][y].el.innerHTML = String.fromCharCode(tiles[x][y].letter);
+				if ( tiles[x][y].el.innerHTML != '?' && vowels.match(tiles[x][y].el.innerHTML) ) vowelsCount++;
 			}
 		}
 
@@ -315,12 +329,27 @@ HEXA.hexmap = (function () {
 		}
 	}
 
+	function removeVowel () {
+		vowelsCount--;
+	}
+
+	function addVowel () {
+		vowelsCount++;
+	}
+
+	function getVowels () {
+		return vowelsCount;
+	}
+
 	return {
 		init: init,
 		findTileFromPosition: findTileFromPosition,
 		findDirection: findDirection,
 		findNearby: findNearby,
 		dropTiles: dropTiles,
+		removeVowel: removeVowel,
+		addVowel: addVowel,
+		getVowels: getVowels,
 		destroy: destroy
 	};
 })();

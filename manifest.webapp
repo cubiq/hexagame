@@ -1,0 +1,18 @@
+{
+  "version": "0.9",
+  "name": "Hexagame",
+  "description": "Hexagon Map Word Puzzle",
+  "icons": {
+    "16": "/images/icon-16.png",
+    "48": "/images/icon-48.png",
+    "128": "/images/icon-128.png"
+  },
+  "developer": {
+    "name": "Matteo Spinelli",
+    "url": "http://cubiq.org"
+  },
+  "installs_allowed_from": [
+    "https://marketplace.mozilla.org"
+  ],
+  "default_locale": "en"
+}

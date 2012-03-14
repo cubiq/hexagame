@@ -67,7 +67,7 @@ a:hover {
 	position: absolute;
 	width: 87px;
 	height: 76px;
-	background: url(../images/tablet/tiles.png?v3) 0 0 no-repeat;
+	background: url(../images/tablet/tiles.png?v4) 0 0 no-repeat;
 	font-size: 36px;
 	text-align: center;
 	line-height: 76px;
@@ -80,7 +80,7 @@ a:hover {
 .landscape .tile {
 	width: 80px;
 	height: 70px;
-	background: url(../images/desktop/tiles.png?v3) 0 0 no-repeat;
+	background: url(../images/desktop/tiles.png?v4) 0 0 no-repeat;
 	line-height: 70px;
 }
 
@@ -113,12 +113,19 @@ a:hover {
 	text-shadow: 0 1px 0 #b0ffd0;
 }
 
+.tile.variant5 {
+	background-position: -696px 0;
+	color: #100c19;
+	text-shadow: 0 1px 1px #ce9aff;
+}
+
 .tile.pressed {
 	background-position: -261px 0;
 	line-height: 80px;
 	color: #171b39;
 }
 
+.tile.variant5.pressed,
 .tile.variant4.pressed {
 	background-position: -435px 0;
 }
@@ -150,10 +157,15 @@ a:hover {
 	background-position: -320px 0;
 }
 
+.landscape .tile.variant5 {
+	background-position: -640px 0;
+}
+
 .landscape .tile.pressed {
 	background-position: -240px 0;
 }
 
+.landscape .tile.variant5.pressed,
 .landscape .tile.variant4.pressed {
 	background-position: -400px 0;
 }
@@ -1395,6 +1407,10 @@ a:hover {
 	font-size:28px;
 	margin:10px 0;
 	line-height:130%;
+}
+
+.landscape #charts h1 {
+	display: none;
 }
 
 #charts table {

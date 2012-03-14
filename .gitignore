@@ -1,7 +1,10 @@
 .DS_Store
 dict/*.txt
 dict/*.php
+dict/*.zip
 libs/google
 config.php
 makedist.sh
+deploy.sh
+.exclude
 js/hexagame-min.js

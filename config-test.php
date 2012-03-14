@@ -9,5 +9,5 @@ $config = array(
 	'googleSecret'	=> '',
 	'googleRedirect'	=> '',
 
-	'salt'			=> ''
+	'salt'			=> ''		// This is used to salt the session hash, make it a complex string (alphanum+symbols)
 );

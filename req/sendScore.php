@@ -75,7 +75,8 @@ $leaderboard = $stmt->fetch();
 if ( $leaderboard && $leaderboard->score > $score ) {
 	echo json_encode( array(
 		'status' => 'success',
-		'message' => 'no update happened')
+		'message' => 'no update happened',
+		'score' => $leaderboard->score)
 	);
 	exit;
 }

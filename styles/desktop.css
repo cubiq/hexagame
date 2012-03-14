@@ -98,7 +98,7 @@ a:hover {
 	position: absolute;
 	width: 80px;
 	height: 70px;
-	background: url(../images/desktop/tiles.png?v2) 0 0 no-repeat;
+	background: url(../images/desktop/tiles.png?v3) 0 0 no-repeat;
 	font-size: 36px;
 	text-align: center;
 	line-height: 70px;
@@ -142,12 +142,19 @@ a:hover {
 	text-shadow: 0 1px 1px #b0ffd0;
 }
 
+.tile.variant5 {
+	background-position: -640px 0;
+	color: #100c19;
+	text-shadow: 0 1px 1px #ce9aff;
+}
+
 .tile.pressed {
 	background-position: -240px 0;
 	line-height: 74px;
 	color: #171b39;
 }
 
+.tile.variant5.pressed,
 .tile.variant4.pressed {
 	background-position: -400px 0;
 }

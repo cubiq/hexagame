@@ -316,7 +316,8 @@ HEXA.hexagame = (function () {
 			letter = '',
 			prevLetter = '',
 			word = '',
-			special = 0;
+			special = 0,
+			timebonus = 0;
 		
 		scoreboard.addLetters(l);		// Update the number of letters, available swaps, and level progress
 		countdown.add(l * ( l - 3 ));	// grant the user a bonus time if the word is longer than 3 letters
@@ -327,7 +328,8 @@ HEXA.hexagame = (function () {
 			score += dict.getLetterValue(letter) * (prevLetter == letter ? 2 : 1);
 			prevLetter = letter;
 			word += letter;
-			if (selectedTiles[i].special) special++;
+			if ( selectedTiles[i].special == 1 ) special++;
+			else if ( selectedTiles[i].special == 2 ) timebonus++;
 		}
 		// multiply the value by the number of letters (over the third letter)
 		score = score * ( l - 2 );
@@ -346,6 +348,12 @@ HEXA.hexagame = (function () {
 			//utils.floatMessage(selectedTiles[l-1].el, 'Bonus Tile', 50, 1500);
 		}
 
+		// special tiles grant special bonus
+		if ( timebonus ) {
+			utils.floatMessage(selectedTiles[l-1].el, 'Bonus Time', 20, 1500);
+			countdown.add(15);
+		}
+
 		//scoreboard.addScore(score);
 
 		// Show the score
@@ -360,23 +368,42 @@ HEXA.hexagame = (function () {
 			l = selectedTiles.length,
 			tile,
 			delay = 0,
+			special,
+			vowels = dict.getVowels().join(''),
 			newTile = function (el) {
 				var tile = hexmap.tiles[el.dataset.x][el.dataset.y],
 					oldLetter;
 
 				utils.translate(tile.el, 0, 0, 1);
 
-				tile.special = !utils.rnd(parms.mapWidth * parms.mapHeight);		// You have 1 in (map_Width * map_Height) chance to get a special tile
-				tile.variant = tile.special ? 4 : utils.rnd(1, 3);
+				tile.special = false;
+				if ( !special ) {
+					special = utils.rnd(parms.mapWidth * parms.mapHeight) + 1;
+					if ( special == 1 || special == 2 ) {
+						tile.special = special;
+						special = true;
+					} else {
+						special = false;
+					}
+				}
+
+				tile.variant = tile.special ? tile.special + 3 : utils.rnd(1, 3);
 
 				oldLetter = tile.letter;
 
 				while ( oldLetter == tile.letter ) {
+					if ( parms.mapWidth * parms.mapHeight / hexmap.getVowels() > 4 ) {
+						tile.letter = !utils.rnd(Math.round(parms.mapWidth * parms.mapHeight * 2)) ? 63 : dict.getVowel();
+					}
 					tile.letter = !utils.rnd(Math.round(parms.mapWidth * parms.mapHeight * 2)) ? 63 : dict.getLetter();
 				}
 
 				tile.el.innerHTML = String.fromCharCode(tile.letter);
 				tile.el.className = 'tile ' + 'variant' + tile.variant;
+
+				if ( tile.el.innerHTML != '?' && vowels.match(tile.el.innerHTML) ) {
+					hexmap.addVowel();
+				}
 
 				utils.animate(tile.el, {
 					from: { opacity: 0, scale: 0.5 },
@@ -388,7 +415,8 @@ HEXA.hexagame = (function () {
 
 						if ( tile == selectedTiles[l-1] ) {
 							scoreboard.addScore(score);
-							isGameReady = true; selectedTiles = [];
+							isGameReady = true;
+							selectedTiles = [];
 						}
 					}
 				});
@@ -396,6 +424,10 @@ HEXA.hexagame = (function () {
 
 		for ( ; i < l; i++ ) {
 			tile = hexmap.tiles[selectedTiles[i].el.dataset.x][selectedTiles[i].el.dataset.y];
+
+			if ( tile.el.innerHTML != '?' && vowels.match(tile.el.innerHTML) ) {
+				hexmap.removeVowel();
+			}
 
 			utils.animate(tile.el, {
 				from: { opacity: 1, scale: 1 },

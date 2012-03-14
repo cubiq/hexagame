@@ -159,7 +159,7 @@ HEXA.init = (function (w) {
 
 		style.setAttribute('type', 'text/css');
 		style.setAttribute('rel', 'stylesheet');
-		style.setAttribute('href', 'styles/' + parms.platform + '.css?v4');
+		style.setAttribute('href', 'styles/' + parms.platform + '.css?v6');
 		head.appendChild(style);
 	}
 
