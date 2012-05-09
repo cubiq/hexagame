@@ -23,6 +23,9 @@ HEXA.scoreboard = (function () {
 		letters = 0;
 		swaps = 0;
 
+		wordLengthAvgEl.innerHTML = '0';
+		wordsEl.innerHTML = '0';
+
 		scoredriver.init();
 		levelup.init();
 		setSwaps(3);
@@ -48,11 +51,11 @@ HEXA.scoreboard = (function () {
 		wordLengthAvg = Math.round(letters / words * 10) / 10;
 		wordLengthAvgEl.innerHTML = wordLengthAvg.toString();
 
-		// Level up (3 letters words have very little value upon levelling)
-		levelup.add(value == 3 ? 2 : value);
-
 		// Update swaps
 		addSwaps( value / 18 );
+
+		// Level up (3 letters words have very little value upon levelling)
+		levelup.add(value == 3 ? 2 : value);
 	}
 
 	function setSwaps ( value ) {
@@ -82,7 +85,7 @@ HEXA.scoreboard = (function () {
 	}
 
 	function getLevel () {
-		return levelup.get();
+		return levelup.get() || 1;
 	}
 
 	function onLevelUp (callback) {

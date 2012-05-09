@@ -138,6 +138,7 @@ If you want to contribute with other languages please follow these rules:
 
 1. Download the [wordlist](http://hexaga.me/dict/wordlist.zip), unzip and place it in the `dict` folder.
 2. Rename `config-test.php` to `config.php`.
+3. Add audio files in the Audio folder (not provided in this repo)
 
 You should be ready to go. If you want to add the leader boards and user login you also need.
 

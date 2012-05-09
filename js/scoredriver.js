@@ -18,8 +18,8 @@ HEXA.scoredriver = (function () {
 	}
 
 	function set (points) {
-		//clearTimeout(timer);
-		utils.clearMyTimeout(timer);
+		clearTimeout(timer);
+		//utils.clearMyTimeout(timer);
 
 		counter = points || 0;
 		totalScore = counter;
@@ -34,16 +34,22 @@ HEXA.scoredriver = (function () {
 
 		scoreEl.innerHTML = utils.formatNumber(counter);
 
-		//if (counter < totalScore) timer = setTimeout(_ticker, 50);
-		if (counter < totalScore) timer = utils.myTimeout(_ticker, 50);
+		if (counter < totalScore) timer = setTimeout(_ticker, 50);
+		//if (counter < totalScore) timer = utils.myTimeout(_ticker, 50);
 	}
 		
 	function add (value) {
-		//clearTimeout(timer);
-		utils.clearMyTimeout(timer);
+		clearTimeout(timer);
+		//utils.clearMyTimeout(timer);
 
 		totalScore += value;
 		if ( totalScore == counter ) return;
+
+		if ( HEXA.parms.platform != 'desktop' ) {
+			scoreEl.innerHTML = utils.formatNumber(totalScore);
+			return;
+		}
+
 		_ticker();
 	}
 

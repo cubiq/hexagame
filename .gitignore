@@ -8,3 +8,9 @@ makedist.sh
 deploy.sh
 .exclude
 js/hexagame-min.js
+video/*.mp4
+video/*.ogv
+video/*.webm
+audio/*.mp3
+audio/*.wav
+audio/*.mp4

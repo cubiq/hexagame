@@ -5,15 +5,16 @@ HEXA.userinfo = (function (w) {
 	function init () {
 		var i,
 			defaults = {
-			locale: '',
+				locale: '',
 
-			completedGames: 0,
-			highScore: 0,
-			scoreDelivery: {},
+				completedGames: 0,
+				highScore: 0,
+				maxLevel: 1,
+				scoreDelivery: {},
 
-			id: 0,
-			name: ''
-		};
+				id: 0,
+				name: ''
+			};
 
 		for ( i in defaults ) {
 			if ( !(i in u) ) u[i] = defaults[i];
@@ -34,6 +35,7 @@ HEXA.userinfo = (function (w) {
 						u.name = result.name;
 						u.id = +result.id;
 						u.highScore = +result.highScore;
+						u.maxLevel = +result.maxLevel;
 					}
 				}
 
@@ -51,6 +53,17 @@ HEXA.userinfo = (function (w) {
 	function completeGame () {
 		u.completedGames++;
 		save();
+	}
+
+	function setLevel (level) {
+		if ( level <= u.maxLevel ) return;
+
+		u.maxLevel = level;
+		save();
+	}
+
+	function getLevel () {
+		return u.maxLevel;
 	}
 
 	function isLogged () {
@@ -115,6 +128,8 @@ HEXA.userinfo = (function (w) {
 		get: get,
 		setHighScore: setHighScore,
 		getHighScore: getHighScore,
+		setLevel: setLevel,
+		getLevel: getLevel,
 		completeGame: completeGame,
 		verify: verify,
 		isLogged: isLogged,

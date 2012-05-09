@@ -31,7 +31,8 @@ HEXA.hexmap = (function () {
 			tile,
 			special,
 			vowels = dict.getVowels().join(''),
-			countQ = 0;
+			countQ = 0,
+			level = HEXA.scoreboard.getLevel();
 		
 		gameEl = $.id('game');
 		boardWrapperEl = $.id('boardwrapper');
@@ -55,19 +56,30 @@ HEXA.hexmap = (function () {
 				tile.special = false;
 				if ( !special ) {
 					special = utils.rnd(parms.mapWidth * parms.mapHeight) + 1;
-					if ( special == 1 || special == 2 ) {
+					if ( special == 1 ) {
+						tile.special = special;
+						special = true;
+					} else if ( special == 2 && level > 2 ) {
+						tile.special = special;
+						special = true;
+					} else if ( special == 3 && level > 4 ) {
+						tile.special = special;
+						special = true;
+					} else if ( special == 4 && level > 6 ) {
 						tile.special = special;
 						special = true;
 					} else {
 						special = false;
 					}
 				}
+
 				tile.variant = tile.special ? tile.special + 3 : utils.rnd(1, 3);
-				tile.letter = !utils.rnd(Math.round(parms.mapWidth * parms.mapHeight * 1.7)) ? 63 : dict.getLetter();
+				tile.letter = !utils.rnd(Math.round(parms.mapWidth * parms.mapHeight * 1.7)) ? 63 : dict.getLetter();	// Question mark tile
 
 				tiles[x][y] = tile;
 
 				el.className = 'tile variant' + tile.variant;
+				el.style.opacity = '0';
 				if ( !('dataset' in el) ) el.dataset = {};
 				el.dataset.x = x;
 				el.dataset.y = y;
@@ -96,6 +108,85 @@ HEXA.hexmap = (function () {
 		}
 
 		HEXA.hexmap.tiles = tiles;
+	}
+
+
+	/**
+	*
+	* Clear and Redraw the board
+	*
+	*/
+	function redraw (onCompletion) {
+		var x, y,
+			vowels = dict.getVowels().join(''),
+			countQ = 0,
+			special = false,
+			level = HEXA.scoreboard.getLevel();
+
+		vowelsCount = 0;
+
+		for ( x = 0; x < parms.mapWidth; x++ ) {
+			for ( y = 0; y < parms.mapHeight; y++) {
+				tiles[x][y].el.style.opacity = '0';
+
+				tiles[x][y].special = false;
+				if ( !special ) {
+					special = utils.rnd(parms.mapWidth * parms.mapHeight) + 1;
+					if ( special == 1 ) {
+						tiles[x][y].special = special;
+						special = true;
+					} else if ( special == 2 && level > 2 ) {
+						tiles[x][y].special = special;
+						special = true;
+					} else if ( special == 3 && level > 4 ) {
+						tiles[x][y].special = special;
+						special = true;
+					} else {
+						special = false;
+					}
+				}
+
+				tiles[x][y].variant = tiles[x][y].special ? tiles[x][y].special + 3 : utils.rnd(1, 3);
+				tiles[x][y].letter = !utils.rnd(Math.round(parms.mapWidth * parms.mapHeight * 1.7)) ? 63 : dict.getLetter();	// Question mark tile
+				tiles[x][y].el.className = 'tile variant' + tiles[x][y].variant;
+			}
+		}
+
+		// Check for triplicates
+		for ( x = 0; x < parms.mapWidth; x++ ) {
+			for ( y = 0; y < parms.mapHeight; y++) {
+				// Almost all Qs must have an U
+				if ( tiles[x][y].letter == 81 && countQ % 2 === 0 ) {
+					checkQ(x, y);
+					countQ++;
+				}
+
+				while ( checkDuplicates(x, y) ) {
+					tiles[x][y].letter = dict.getLetter();
+				}
+				tiles[x][y].el.innerHTML = String.fromCharCode(tiles[x][y].letter);
+				if ( tiles[x][y].el.innerHTML != '?' && vowels.match(tiles[x][y].el.innerHTML) ) vowelsCount++;
+			}
+		}
+
+		showTiles(onCompletion, 1500);
+	}
+
+	function showTiles (onCompletion, delay) {
+		var x, y;
+		delay = delay || 200;
+		for ( x = 0; x < parms.mapWidth; x++ ) {
+			for ( y = 0; y < parms.mapHeight; y++) {
+				utils.animate(tiles[x][y].el, {
+					from: { scale: 0.5, opacity: 0 },
+					to: { scale: 1, opacity: 1 },
+					delay: delay + x * y * 25,
+					easing: HEXA.easing.quadraticOut,
+					duration: 250,
+					callback: x == parms.mapWidth-1 && y == parms.mapHeight-1 ? onCompletion : null
+				});
+			}
+		}
 	}
 
 
@@ -178,8 +269,8 @@ HEXA.hexmap = (function () {
 			wrapper;
 
 		wrapper = board || boardEl;
-		posx -= wrapper.offsetLeft;
-		posy -= wrapper.offsetTop;
+		posx -= wrapper.offsetLeft + 20;
+		posy -= wrapper.offsetTop + 20;
 
 		while ( wrapper = wrapper.offsetParent ) {
 			posx -= wrapper.offsetLeft;
@@ -350,6 +441,8 @@ HEXA.hexmap = (function () {
 		removeVowel: removeVowel,
 		addVowel: addVowel,
 		getVowels: getVowels,
+		redraw: redraw,
+		showTiles: showTiles,
 		destroy: destroy
 	};
 })();

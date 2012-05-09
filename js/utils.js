@@ -349,22 +349,22 @@ HEXA.utils = (function () {
 		height = el.offsetHeight;
 
 		animate(el, {
-			from: { bgX: -141, bgY: height },
-			to: { bgX: -141, bgY: 0 },
+			from: { bgX: 0, bgY: height },
+			to: { bgX: 0, bgY: 0 },
 			delay: 200,
 			duration: 250,
 			easing: HEXA.easing.sineInOut,
 			callback: function () {
 				animate(el, {
-					from: { bgX: -141, bgY: 0 },
-					to: { bgX: -141, bgY: -height },
+					from: { bgX: 0, bgY: 0 },
+					to: { bgX: 0, bgY: -height },
 					delay: 900,
 					duration: 250,
 					easing: HEXA.easing.sineInOut,
 					callback: function () {
 						animate(el, {
-							from: { bgX: -141, bgY: -height },
-							to: { bgX: -141, bgY: -height * 2 },
+							from: { bgX: 0, bgY: -height },
+							to: { bgX: 0, bgY: -height * 2 },
 							delay: 900,
 							duration: 250,
 							easing: HEXA.easing.sineInOut,

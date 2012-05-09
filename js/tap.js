@@ -23,6 +23,7 @@ HEXA.Tap = (function () {
 		utils.bind(this.el, eventStart, this);
 		utils.bind(this.el, eventMove, this);
 		utils.bind(this.el, eventEnd, this);
+		utils.bind(this.el, eventCancel, this);
 
 		//this.el.addEventListener('mouseout', this, false);
 	}
@@ -57,8 +58,6 @@ HEXA.Tap = (function () {
 				point = parms.hasTouch ? e.touches[0] : e,
 				ev;
 			
-			//e.preventDefault();
-
 			clearTimeout( this.timer );
 
 			this.initiated = true;
@@ -83,13 +82,13 @@ HEXA.Tap = (function () {
 		},
 
 		move: function (e) {
-			clearTimeout(this.timer);
 			if ( !this.initiated ) return;
 
 			var x = parms.hasTouch ? e.touches[0].pageX : e.pageX,
 				y = parms.hasTouch ? e.touches[0].pageY : e.pageY;
 
 			if ( Math.abs( x - this.startX ) > 10 || Math.abs( y - this.startY ) > 10 ) {
+				clearTimeout(this.timer);
 				utils.removeClass(this.target, 'tapPressed');
 				this.moved = true;
 			}
@@ -101,6 +100,8 @@ HEXA.Tap = (function () {
 		},*/
 
 		end: function (e) {
+			//var that = this;
+
 			clearTimeout(this.timer);
 			if ( !this.initiated ) return;
 			this.initiated = false;
@@ -120,6 +121,7 @@ HEXA.Tap = (function () {
 			utils.unbind(this.el, eventStart, this);
 			utils.unbind(this.el, eventMove, this);
 			utils.unbind(this.el, eventEnd, this);
+			utils.unbind(this.el, eventCancel, this);
 			//this.el.removeEventListener('mouseout', this, false);
 		}
 	};

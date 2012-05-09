@@ -7,8 +7,10 @@ HEXA.hexagame = (function () {
 		countdown = HEXA.countdown,
 		scoreboard = HEXA.scoreboard,
 		mainmenu = HEXA.mainmenu,
+		audio = HEXA.audio,
 
 		tapLayer,
+		tutorialTapLayer,
 		dragging,
 
 		boardEl,
@@ -20,6 +22,7 @@ HEXA.hexagame = (function () {
 		selectedTiles = [],
 
 		bonusWord,
+		boardRedraw = false,
 
 		isGameReady = false,
 		isGameOver = true;
@@ -38,7 +41,8 @@ HEXA.hexagame = (function () {
 		if ( parms.platform == 'desktop' ) {
 			utils.translate(boardwrapperEl, -boardwrapperEl.offsetWidth - boardwrapperEl.offsetLeft, 0);
 		} else {
-			boardwrapperEl.style.opacity = '0';
+			utils.translate(boardwrapperEl, -boardwrapperEl.offsetWidth - boardwrapperEl.offsetLeft, 0);
+			//boardwrapperEl.style.opacity = '0';
 		}
 		
 		if ( parms.platform == 'desktop' ) {
@@ -54,7 +58,7 @@ HEXA.hexagame = (function () {
 		utils.bind(boardEl, 'tap', tileTap);
 		utils.bind(boardEl, 'dragStart', dragStart);
 
-		parms.nowPlaying = 'hexagame';
+		isGameReady = false;
 		isGameOver = false;
 
 		HEXA.hexmap.init();
@@ -75,11 +79,14 @@ HEXA.hexagame = (function () {
 		boardEl.style.left = '50%';
 		countdown.init(180, gameOver);
 		scoreboard.setSwaps(3);
-		isGameReady = true;
-		isGameOver = false;
-		setReady();
-	}
+		updateBonusWord();
 
+		hexmap.showTiles(function () {
+			isGameReady = false;
+			isGameOver = false;
+			setReady();
+		});
+	}
 
 	function boardSlideIn () {
 		if ( parms.platform == 'desktop' ) {
@@ -90,16 +97,21 @@ HEXA.hexagame = (function () {
 				easing: HEXA.easing.quadraticOut,
 				callback: function () {
 					$.id('homescreen').style.left = '-9999px';
+					hexmap.showTiles(setReady);
 				}
 			});
 		} else {
+			//boardwrapperEl.style.opacity = '1';
+			//$.id('homescreen').style.left = '-9999px';
+			
 			utils.animate(boardwrapperEl, {
-				from: { opacity: 0 },
-				to: { opacity: 1 },
-				duration: 800,
+				from: { x: utils.getTranslate(boardwrapperEl).x, y: 0 },
+				to: { x: 0, y: 0 },
+				duration: 700,
 				easing: HEXA.easing.quadraticOut,
 				callback: function () {
 					$.id('homescreen').style.left = '-9999px';
+					hexmap.showTiles(setReady);
 				}
 			});
 		}
@@ -127,7 +139,7 @@ HEXA.hexagame = (function () {
 		utils.translate($.id('gateLeft'), 0, 0);
 		utils.translate($.id('gateRight'), 0, 0);
 
-		if ( parms.platform == 'desktop' ) {
+//		if ( parms.platform == 'desktop' ) {
 			utils.animate(boardwrapperEl, {
 				from: { x: 0, y: 0 },
 				to: { x: -boardwrapperEl.offsetWidth - boardwrapperEl.offsetLeft, y: 0 },
@@ -135,7 +147,7 @@ HEXA.hexagame = (function () {
 				easing: HEXA.easing.sineInOut,
 				callback: callback
 			});
-		} else {
+/*		} else {
 			utils.animate(boardwrapperEl, {
 				from: { opacity: 1 },
 				to: { opacity: 0 },
@@ -143,7 +155,7 @@ HEXA.hexagame = (function () {
 				easing: HEXA.easing.quadraticIn,
 				callback: callback
 			});
-		}
+		}*/
 	}
 
 	function scoreboardSlideIn () {
@@ -152,25 +164,22 @@ HEXA.hexagame = (function () {
 				from: { x: utils.getTranslate(scoreboardEl).x, y: 0 },
 				to: { x: 0, y: 0 },
 				duration: 700,
-				easing: HEXA.easing.quadraticOut,
-				callback: setReady
+				easing: HEXA.easing.quadraticOut
 			});
 		} else {
 			if ( parms.orientation == 'portrait' ) {
 				utils.animate(scoreboardEl, {
 					from: { x: 0, y: utils.getTranslate(scoreboardEl).y },
 					to: { x: 0, y: 0 },
-					duration: 500,
-					easing: HEXA.easing.quadraticOut,
-					callback: setReady
+					duration: 700,
+					easing: HEXA.easing.quadraticOut
 				});
 			} else {
 				utils.animate(scoreboardEl, {
 					from: { x: utils.getTranslate(scoreboardEl).x, y: 0 },
 					to: { x: 0, y: 0 },
-					duration: 500,
-					easing: HEXA.easing.quadraticOut,
-					callback: setReady
+					duration: 700,
+					easing: HEXA.easing.quadraticOut
 				});
 			}
 		}
@@ -205,11 +214,73 @@ HEXA.hexagame = (function () {
 
 	function setReady () {
 		setTimeout(function () {
-			utils.readyGo(function () {
-				countdown.start();
-				isGameReady = true;
-			});
+			if ( HEXA.userinfo.getHighScore() > 0 || scoreboard.getScore() > 0 ) {
+				utils.readyGo(function () {
+					countdown.start();
+					isGameReady = true;
+				});
+			} else {
+				HEXA.popup.show({
+					width: 720,
+					height: 570,
+					content: '<div id="tutorial"><h1>Welcome to Hexagame!</h1><p>1. Find words by ' + (HEXA.parms.platform == 'desktop' ? 'clicking' : 'tapping') + ' a minimum of 3 nearby tiles<br>2. Hit the last tile twice to confirm the word</p><p><video autoplay="autoplay" controls="controls" loop="loop" tabindex="0" width="320" height="240" id="tutorialVideo"><source src="video/tut-1.mp4" type=\'video/mp4; codecs="avc1.42E01E, mp4a.40.2"\' /><source src="video/tut-1.webm" type=\'video/webm; codecs="vp8, vorbis"\' /><source src="video/tut-1.ogv" type=\'video/ogg; codecs="theora, vorbis"\' /></video></p><p><div id="tut-1-next" class="button action">Continue</div></p></div>',
+					duration: 500,
+					easing: HEXA.easing.quadraticOut,
+					onCompletion: function () {
+						var button = $.id('tut-1-next');
+						tutorialTapLayer = new HEXA.Tap(button);
+						utils.bind(button, 'tap', tutStep2);
+					}
+				});
+			}
 		}, 300);
+	}
+
+
+	function tutStep2 () {
+		tutorialTapLayer.destroy();
+		utils.unbind($.id('tut-1-next'), 'tap', tutStep2);
+		$.id('tutorialVideo').pause();
+
+		setTimeout(function () {
+//			$.id('tutorialVideo').style.display = 'none';
+
+			HEXA.popup.hide(function () {
+				setTimeout(function () {
+					HEXA.popup.show({
+						width: 720,
+						height: 600,
+						content: '<div id="tutorial"><h1>Letters can be rearranged!</h1><p>1. To swap letters ' + (HEXA.parms.platform == 'desktop' ? 'click' : 'tap') + '-and-hold on a tile<br>2. Drag it to a nearby tile and release to confirm<br>Note: you have a limited number of swaps, use them wisely.</p><p><video id="tutorialVideo" autoplay="autoplay" controls="controls" loop="loop" tabindex="0" width="320" height="240"><source src="video/tut-2.mp4" type=\'video/mp4; codecs="avc1.42E01E, mp4a.40.2"\' /><source src="video/tut-2.webm" type=\'video/webm; codecs="vp8, vorbis"\' /><source src="video/tut-2.ogv" type=\'video/ogg; codecs="theora, vorbis"\' /></video></p><p><div id="tut-close" class="button action">Start Playing!</div></p></div>',
+						duration: 500,
+						easing: HEXA.easing.quadraticOut,
+						onCompletion: function () {
+							var button = $.id('tut-close');
+							tutorialTapLayer = new HEXA.Tap(button);
+							utils.bind(button, 'tap', tutClose);
+						}
+					});
+				}, 100);
+			});
+		}, 100);
+	}
+
+	function tutClose () {
+		tutorialTapLayer.destroy();
+		utils.unbind($.id('tut-close'), 'tap', tutClose);
+		$.id('tutorialVideo').pause();
+
+		setTimeout(function () {
+//			$.id('tutorialVideo').style.display = 'none';
+
+			HEXA.popup.hide(function () {
+				setTimeout(function () {
+					utils.readyGo(function () {
+						countdown.start();
+						isGameReady = true;
+					});
+				}, 100);
+			});
+		}, 100);
 	}
 
 
@@ -238,6 +309,8 @@ HEXA.hexagame = (function () {
 
 		// If you re-tap the last tile, lookup the word
 		if ( l && tile == selectedTiles[l-1] ) {
+			isGameReady = false;		// Anti flood
+
 			if ( l < 3 ) {
 				wrongWord();
 				return;
@@ -245,8 +318,6 @@ HEXA.hexagame = (function () {
 			
 			for ( i = 0; i < l; i++ ) word += String.fromCharCode(selectedTiles[i].letter);
 			
-			isGameReady = false;		// Anti flood
-
 			if ( dict.lookup(word) ) correctWord();
 			else wrongWord();
 
@@ -261,6 +332,7 @@ HEXA.hexagame = (function () {
 
 		if ( deselect ) {
 			selectedTiles = selectedTiles.slice(0, deselect);
+			audio.tileTap();
 			return;
 		}
 
@@ -268,12 +340,14 @@ HEXA.hexagame = (function () {
 		if ( prevTile && !hexmap.findDirection(+prevTile.el.dataset.x, +prevTile.el.dataset.y, x, y)) {
 			for ( i = 0; i < l; i++ ) utils.removeClass(selectedTiles[i].el, 'pressed');
 			selectedTiles = [];
+			audio.tileDeselect();
 			return;
 		}
 
 		if ( l < 8 ) {
 			utils.addClass(tile.el, 'pressed', true);
 			selectedTiles.push(tile);
+			audio.tileTap();
 		}
 	}
 
@@ -285,11 +359,13 @@ HEXA.hexagame = (function () {
 	function wrongWord () {
 		var i = 0,
 			l = selectedTiles.length;
-		
+
 		for ( ; i < l; i++ ) {
 			utils.removeClass(selectedTiles[i].el, 'pressed');
 			utils.addClass(selectedTiles[i].el, 'wrong');
 		}
+
+		audio.wrongWord();
 		
 		setTimeout(function () {
 			var els = $.all('#board .wrong');
@@ -317,11 +393,12 @@ HEXA.hexagame = (function () {
 			prevLetter = '',
 			word = '',
 			special = 0,
-			timebonus = 0;
+			timebonus = 0,
+			levelupbonus = 0,
+			isBonusWord = false,
+			blackTile = 0,
+			prevLevel = scoreboard.getLevel();
 		
-		scoreboard.addLetters(l);		// Update the number of letters, available swaps, and level progress
-		countdown.add(l * ( l - 3 ));	// grant the user a bonus time if the word is longer than 3 letters
-
 		// Find the word value
 		for ( ; i < l; i++ ) {
 			letter = String.fromCharCode(selectedTiles[i].letter);
@@ -330,46 +407,79 @@ HEXA.hexagame = (function () {
 			word += letter;
 			if ( selectedTiles[i].special == 1 ) special++;
 			else if ( selectedTiles[i].special == 2 ) timebonus++;
+			else if ( selectedTiles[i].special == 3 ) levelupbonus++;
+			else if ( selectedTiles[i].special == 4 ) blackTile++;
 		}
 		// multiply the value by the number of letters (over the third letter)
 		score = score * ( l - 2 );
 
 		// bonus word grants super bonus
 		if ( word == bonusWord ) {
+			isBonusWord = true;
 			special = 0;		// bonuses do not sum up
+			blackTile = 0;
+			timebonus = 0;
+			levelupbonus = 0;
 			score = score * 10;
-			utils.floatMessage(selectedTiles[l-1].el, 'Bonus Word', -100, 1500);
-			updateBonusWord();
+			utils.floatMessage(selectedTiles[l-1].el, 'Bonus Word', -60, 1500);
+			//updateBonusWord();
+
+			HEXA.levelup.add( HEXA.levelup.getRemaining()-1 );
+		}
+
+		scoreboard.addLetters(l);		// Update the number of letters, available swaps, and level progress
+		countdown.add(l * ( l - 3 ));	// grant the user a bonus time if the word is longer than 3 letters
+
+		// Black tile zeros other bonuses
+		if ( blackTile ) {
+			special = 0;
+			timebonus = 0;
+			levelupbonus = 0;
+
+			utils.floatMessage(selectedTiles[l-1].el, 'Black Tile!', -60, 1500);
+			if ( scoreboard.getLevel() == prevLevel ) {
+				countdown.pause();
+				boardRedraw = true;
+			}
 		}
 
 		// special tiles grant special bonus
 		if ( special ) {
-			score = score * Math.min(special * 3, 9);
-			//utils.floatMessage(selectedTiles[l-1].el, 'Bonus Tile', 50, 1500);
+			special = Math.min(special * 3, 9);
+			score = score * special;
+			utils.floatMessage(selectedTiles[l-1].el, 'Score x' + special, -60, 1500);
 		}
 
 		// special tiles grant special bonus
 		if ( timebonus ) {
-			utils.floatMessage(selectedTiles[l-1].el, 'Bonus Time', 20, 1500);
+			utils.floatMessage(selectedTiles[l-1].el, 'Bonus Time', 60, 1500);
 			countdown.add(15);
 		}
 
-		//scoreboard.addScore(score);
+		// Level up bonus
+		if ( levelupbonus ) {
+			utils.floatMessage(selectedTiles[l-1].el, 'Level Up Bonus', -80, 1800);
+			HEXA.levelup.add( l * 3 );
+		}
+
+		if ( scoreboard.getLevel() == prevLevel ) audio.correctWord();
+		scoreboard.addScore(score);
 
 		// Show the score
-		utils.floatMessage(selectedTiles[l-1].el, score, -50, 1000);
+		if ( !blackTile && !isBonusWord && !timebonus && !special && !levelupbonus ) utils.floatMessage(selectedTiles[l-1].el, score, -50, 1000);
 
 		// Find new tiles
-		setTimeout(function () { updateTiles(score); }, 10);
+		setTimeout(updateTiles, 10);
 	}
 
-	function updateTiles (score) {
+	function updateTiles () {
 		var i = 0,
 			l = selectedTiles.length,
 			tile,
 			delay = 0,
 			special,
 			vowels = dict.getVowels().join(''),
+			level = HEXA.scoreboard.getLevel(),
 			newTile = function (el) {
 				var tile = hexmap.tiles[el.dataset.x][el.dataset.y],
 					oldLetter;
@@ -379,7 +489,16 @@ HEXA.hexagame = (function () {
 				tile.special = false;
 				if ( !special ) {
 					special = utils.rnd(parms.mapWidth * parms.mapHeight) + 1;
-					if ( special == 1 || special == 2 ) {
+					if ( special == 1 ) {
+						tile.special = special;
+						special = true;
+					} else if ( special == 2 && level > 2 ) {
+						tile.special = special;
+						special = true;
+					} else if ( special == 3 && level > 4 ) {
+						tile.special = special;
+						special = true;
+					} else if ( special == 4 && level > 6 ) {
 						tile.special = special;
 						special = true;
 					} else {
@@ -392,7 +511,7 @@ HEXA.hexagame = (function () {
 				oldLetter = tile.letter;
 
 				while ( oldLetter == tile.letter ) {
-					if ( parms.mapWidth * parms.mapHeight / hexmap.getVowels() > 4 ) {
+					if ( parms.mapWidth * parms.mapHeight / hexmap.getVowels() > 3 ) {
 						tile.letter = !utils.rnd(Math.round(parms.mapWidth * parms.mapHeight * 2)) ? 63 : dict.getVowel();
 					}
 					tile.letter = !utils.rnd(Math.round(parms.mapWidth * parms.mapHeight * 2)) ? 63 : dict.getLetter();
@@ -400,6 +519,7 @@ HEXA.hexagame = (function () {
 
 				tile.el.innerHTML = String.fromCharCode(tile.letter);
 				tile.el.className = 'tile ' + 'variant' + tile.variant;
+				tile.el.offsetHeight;
 
 				if ( tile.el.innerHTML != '?' && vowels.match(tile.el.innerHTML) ) {
 					hexmap.addVowel();
@@ -408,14 +528,22 @@ HEXA.hexagame = (function () {
 				utils.animate(tile.el, {
 					from: { opacity: 0, scale: 0.5 },
 					to: { opacity: 1, scale: 1 },
-					duration: 250,
+					duration: 300,
 					easing: HEXA.easing.quadraticOut,
 					callback: function (el) {
 						el.style.opacity = '';
 
 						if ( tile == selectedTiles[l-1] ) {
-							scoreboard.addScore(score);
-							isGameReady = true;
+							if ( boardRedraw ) {
+								boardRedraw = false;
+								hexmap.redraw(function () {
+									countdown.start();
+									isGameReady = true;
+								});
+							} else {
+								isGameReady = true;
+							}
+
 							selectedTiles = [];
 						}
 					}
@@ -447,15 +575,15 @@ HEXA.hexagame = (function () {
 	*
 	*/
 	function dragStart (e) {
-		if (!isGameReady || isGameOver || scoreboard.getSwaps() < 1) return;
-		
+		if ( !isGameReady || isGameOver || scoreboard.getSwaps() < 1 ) return;
+
 		var tile = hexmap.findTileFromPosition(e.pageX, e.pageY),
 			i, l,
 			x, y;
 
-		isGameReady = false;
-
 		if ( !tile ) return;
+
+		isGameReady = false;
 
 		// Deselect previously selected tiles
 		for ( i = 0, l = selectedTiles.length; i < l; i++) utils.removeClass(selectedTiles[i].el, 'pressed');
@@ -469,6 +597,8 @@ HEXA.hexagame = (function () {
 			function ( drop ) {
 				dragging = null;
 				isGameReady = true;
+
+				audio.tileDrop();
 
 				if ( !drop ) return;
 
@@ -530,6 +660,8 @@ HEXA.hexagame = (function () {
 		el.className = 'levelUp';
 		utils.translate(el, 0, 0, 0.7);
 		boardwrapperEl.appendChild(el);
+
+		audio.levelUp();
 
 		utils.animate(el, {
 			from: { opacity: 1, scale: 0.7 },

@@ -5,6 +5,7 @@ HEXA.wordhunt = (function () {
 		dict = HEXA.dictionary,
 		scoreboard = HEXA.scoreboard,
 		countdown = HEXA.countdown,
+		audio = HEXA.audio,
 
 		// Elements
 		boardwrapperEl,
@@ -15,6 +16,7 @@ HEXA.wordhunt = (function () {
 		tiles = [],
 		wordsFound = {},
 
+		tutorialTapLayer,
 		tapLayer,
 		dragging,
 
@@ -40,6 +42,7 @@ HEXA.wordhunt = (function () {
 
 		boardwrapperEl = $.id('boardwrapper');
 		wordhuntEl = $.id('wordhunt');
+		wordhuntEl.style.opacity = '0';
 
 		// Create the drop slots
 		for ( x = 0; x < 8; x++ ) {
@@ -101,20 +104,61 @@ HEXA.wordhunt = (function () {
 		utils.bind(wordhuntEl, 'dragStart', dragStart);
 
 		countdown.init(60, gameOver);
-		setReady();
 
 		HEXA.wordhunt.tiles = tiles;
 
 		utils.bind(window, 'orientationchange', orientationChange);
+
+		utils.animate(wordhuntEl, {
+			from: { opacity: 0 },
+			to: { opacity: 1 },
+			duration: 400,
+			callback: setReady
+		});
+		//setReady();
 	}
 
 	function setReady () {
-		utils.readyGo(function () {
-			isGameReady = true;
-			isGameOver = false;
+		setTimeout(function () {
+			if ( HEXA.userinfo.getLevel() > 1 || HEXA.userinfo.getHighScore() > 999 || scoreboard.getLevel() > 2 ) {
+				utils.readyGo(function () {
+					isGameReady = true;
+					isGameOver = false;
+					countdown.start();
+				});
+			} else {
+				HEXA.popup.show({
+					width: 720,
+					height: 600,
+					content: '<div id="tutorial"><h1>Welcome to the Word Hunt mini-game!</h1><p>Collect as many words as you can in the given time frame<br>1. Drag tiles from the bottom to the top row<br>2. Hit the blue button to confirm</p><p><video autoplay="autoplay" controls="controls" loop="loop" tabindex="0" width="320" height="240" id="tutorialVideo"><source src="video/tut-3.mp4" type=\'video/mp4; codecs="avc1.42E01E, mp4a.40.2"\' /><source src="video/tut-3.webm" type=\'video/webm; codecs="vp8, vorbis"\' /><source src="video/tut-3.ogv" type=\'video/ogg; codecs="theora, vorbis"\' /></video></p><p><div id="tut-close" class="button action">Good Hunting!</div></p></div>',
+					duration: 500,
+					easing: HEXA.easing.quadraticOut,
+					onCompletion: function () {
+						var button = $.id('tut-close');
+						tutorialTapLayer = new HEXA.Tap(button);
+						utils.bind(button, 'tap', tutClose);
+					}
+				});
+			}
+		}, 300);
+	}
 
-			countdown.start();
-		});
+	function tutClose () {
+		tutorialTapLayer.destroy();
+		utils.unbind($.id('tut-close'), 'tap', tutClose);
+		$.id('tutorialVideo').pause();
+
+		setTimeout(function () {
+			HEXA.popup.hide(function () {
+				setTimeout(function () {
+					utils.readyGo(function () {
+						isGameReady = true;
+						isGameOver = false;
+						countdown.start();
+					});
+				}, 100);
+			});
+		}, 100);
 	}
 
 	function findLetters () {
@@ -144,8 +188,9 @@ HEXA.wordhunt = (function () {
 				if ( vowelsCount > 4 ) { unbalanced = true; break; }
 			}
 
-			if ( doubles['J'] > 1 || doubles['U'] > 1 || doubles['X'] > 1 || doubles['Y'] > 1 || doubles['Z'] > 1 || vowelsCount < 3 || (doubles['Q'] && !doubles['U']))
+			if ( doubles['Q'] > 1 || doubles['K'] > 1 || doubles['J'] > 1 || doubles['U'] > 1 || doubles['X'] > 1 || doubles['Y'] > 1 || doubles['Z'] > 1 || vowelsCount < 3 || (doubles['Q'] && !doubles['U']) ) {
 				unbalanced = true;
+			}
 		}
 	}
 
@@ -180,9 +225,13 @@ HEXA.wordhunt = (function () {
 						utils.translate(tile.el, 0, 0);
 						tile.el.style.left = x + 'px';
 						tile.el.style.top = y + 'px';
+
+						audio.tileDrop();
 					} else {
 						tiles[x][y] = null;
 						tiles[tile.el.dataset.x][tile.el.dataset.y] = tile;
+
+						audio.tileTap();
 					}
 				}
 
@@ -244,6 +293,8 @@ HEXA.wordhunt = (function () {
 
 		//utils.floatMessage(buttonEl, score, -50, 800);
 
+		audio.correctWord();
+
 		resetTiles(function (el) {
 			if ( el.dataset.last ) {
 				utils.floatMessage(el, score, -50, 800);
@@ -255,6 +306,8 @@ HEXA.wordhunt = (function () {
 	}
 
 	function wrongWord () {
+		audio.wrongWord();
+
 		resetTiles(function (el) {
 				setTimeout(function () {
 					utils.removeClass(el, 'wrong');
@@ -326,6 +379,8 @@ HEXA.wordhunt = (function () {
 		utils.translate(el, 0, 0, 0.7);
 		boardwrapperEl.appendChild(el);
 
+		audio.levelUp();
+
 		utils.animate(el, {
 			from: { opacity: 1, scale: 0.7 },
 			to: { opacity: 0, scale: 1.2 },
@@ -333,8 +388,15 @@ HEXA.wordhunt = (function () {
 			easing: HEXA.easing.quadraticIn,
 			callback: function () {
 				el.parentNode.removeChild(el);
-				destroy();
-				HEXA.hexagame.restart();
+				utils.animate(wordhuntEl, {
+					from: { opacity: 1 },
+					to: { opacity: 0 },
+					duration: 500,
+					callback: function () {
+						destroy();
+						HEXA.hexagame.restart();
+					}
+				});
 			}
 		});
 	}

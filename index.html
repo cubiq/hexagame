@@ -5,15 +5,17 @@
 
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="description" content="Hexagame is an open source HTML5 word puzzle game developed by Matteo Spinelli.">
+	<meta name="viewport" content="width=device-width, user-scalable=no, maximum-scale=1, initial-scale=1">
 
 	<title>Hexagame, Open Source HTML5 Word Puzzle Game</title>
 
-	<link rel="stylesheet" type="text/css" href="styles/common.css?v2">
+	<link rel="stylesheet" type="text/css" href="styles/common.css?v10">
 
-	<!--script type="application/javascript" charset="utf-8" src="js/hexagame-min.js?v9"></script-->
+	<!--script type="application/javascript" charset="utf-8" src="js/hexagame-min.js?v21"></script-->
 	<script type="application/javascript" charset="utf-8" src="js/utils.js"></script>
 	<script type="application/javascript" charset="utf-8" src="js/render.js"></script>
 	<script type="application/javascript" charset="utf-8" src="js/userinfo.js"></script>
+	<script type="application/javascript" charset="utf-8" src="js/audio.js"></script>
 	<script type="application/javascript" charset="utf-8" src="js/init.js"></script>
 	<script type="application/javascript" charset="utf-8" src="js/dictionary.js"></script>
 	<script type="application/javascript" charset="utf-8" src="js/easing.js"></script>
@@ -35,8 +37,9 @@
 	<script type="application/javascript" charset="utf-8" src="js/leaderboard.js"></script>
 
 	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="touch-icon-ipad.png">
-	<link rel="apple-touch-icon-precomposed" sizes="57x57" href="touch-icon-iphone.png">
-	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="touch-icon-iphone@2x.png">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="touch-icon-ipad@2x.png">
+	<!--link rel="apple-touch-icon-precomposed" sizes="57x57" href="touch-icon-iphone.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="touch-icon-iphone@2x.png"-->
 	<link rel="shortcut icon" href="favicon.ico">
 </head>
 
@@ -53,6 +56,7 @@
 			<div id="cache"><div class="tile empty"></div><div class="tileButton empty"></div><div id="emptyText"></div></div>
 			<div id="loginMonitor"></div>
 			<div id="versioning"></div>
+			<div id="news"></div>
 		</div>
 
 		<div id="hexagame">

@@ -43,13 +43,13 @@ HEXA.countdown = (function () {
 	}
 
 	function pause () {
-		//clearTimeout(timer);
-		utils.clearMyTimeout(timer);
+		clearTimeout(timer);
+		//utils.clearMyTimeout(timer);
 	}
 
 	function start () {
-		//clearTimeout(timer);
-		utils.clearMyTimeout(timer);
+		clearTimeout(timer);
+		//utils.clearMyTimeout(timer);
 
 		_tick();
 	}
@@ -73,14 +73,14 @@ HEXA.countdown = (function () {
 		_updateLabel();
 
 		if ( timeRemaining === 0 ) {
-			//clearTimeout(timer);
-			utils.clearMyTimeout(timer);
+			clearTimeout(timer);
+			//utils.clearMyTimeout(timer);
 			if (onCompletion) onCompletion();
 			return;
 		}
 		
-		//timer = setTimeout(_tick, 1000);
-		timer = utils.myTimeout(_tick, 1000);
+		timer = setTimeout(_tick, 1000);
+		//timer = utils.myTimeout(_tick, 1000);
 	}
 
 	function get () {

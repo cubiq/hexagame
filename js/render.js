@@ -6,7 +6,7 @@ HEXA.render = (function (w) {
 				w.oRequestAnimationFrame ||
 				w.msRequestAnimationFrame ||
 				function ( callback ) {
-					w.setTimeout(callback, 16);
+					w.setTimeout(callback, 1);
 				},
 
 		// Libs
@@ -28,11 +28,12 @@ HEXA.render = (function (w) {
 		}
 
 		isRolling = true;
-		rAF(loop);
 
 		for ( ; i < l; i++ ) {
 			if ( keyframeFn[i] ) keyframeFn[i].call();
 		}
+
+		rAF(loop);
 	}
 
 	function render () {

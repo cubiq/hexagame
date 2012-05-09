@@ -85,14 +85,17 @@ $stmt->execute( array(
 setcookie('hexauser', $userId . '+' . $newSessionId, time() + 60*60*24*365, '/', $_SERVER['HTTP_HOST']);
 
 // Get highscore
-$stmt = $db->prepare( "SELECT `score` FROM `scoreboards` WHERE `user_id` = :userId ORDER BY `score` DESC LIMIT 1" );
+//$stmt = $db->prepare( "SELECT `score` FROM `scoreboards` WHERE `user_id` = :userId ORDER BY `score` DESC LIMIT 1" );
+$stmt = $db->prepare( "SELECT MAX(`score`) AS `score`, MAX(`level`) AS `level` FROM `scoreboards` WHERE `user_id` = :userId" );
 $stmt->execute( array( ':userId' => $userId ) );
 $scoreboard = $stmt->fetch();
 $highScore = $scoreboard ? $scoreboard->score : 0;
+$maxLevel = $scoreboard ? $scoreboard->level : 1;
 
 echo json_encode( array(
 	'status' => 'success',
 	'name' => $user->name,
 	'id' => $userId,
-	'highScore' => $highScore)
+	'highScore' => $highScore,
+	'maxLevel' => $maxLevel)
 );

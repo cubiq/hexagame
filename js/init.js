@@ -2,7 +2,7 @@ HEXA.parms = {};
 
 HEXA.init = (function (w) {
 	var	// Version
-		version = '0.9b',
+		version = '0.9.5b',
 
 		// Libs
 		parms = HEXA.parms,
@@ -87,8 +87,6 @@ HEXA.init = (function (w) {
 
 		if ( !userinfo.getLocale() ) userinfo.setLocale(parms.language);
 
-		parms.nowPlaying = '';
-
 		utils.addClass(body, parms.platform);
 		utils.addClass(body, parms.OS);
 		utils.addClass(body, parms.orientation);
@@ -135,10 +133,10 @@ HEXA.init = (function (w) {
 	}
 
 	function scrollTop (callback) {
-		if (w.scrollY != 1) {
+		if ( w.scrollY != 1 ) {
 			w.scrollTo(0, 1);
 
-			if ( callback ) setTimeout(callback, 10);
+			if ( typeof callback == 'function' ) setTimeout(callback, 10);
 		}
 	}
 
@@ -159,7 +157,7 @@ HEXA.init = (function (w) {
 
 		style.setAttribute('type', 'text/css');
 		style.setAttribute('rel', 'stylesheet');
-		style.setAttribute('href', 'styles/' + parms.platform + '.css?v7');
+		style.setAttribute('href', 'styles/' + parms.platform + '.css?v17');
 		head.appendChild(style);
 	}
 
@@ -169,7 +167,7 @@ HEXA.init = (function (w) {
 		game = $.id('game');
 		loading = $.id('preload');
 
-		setViewport();
+		//setViewport();
 		detectDevice();
 		setStylesheet();
 
@@ -224,41 +222,44 @@ HEXA.init = (function (w) {
 
 	function start () {
 		HEXA.dictionary.init(function () {
-			HEXA.mainmenu.init();
+			HEXA.audio.init(function () {
+				HEXA.mainmenu.init();
 
-			game.style.left = parms.platform == 'desktop' ? '50%' : '0px';
-			loading.style.display = 'none';
+				game.style.left = parms.platform == 'desktop' ? '50%' : '0px';
+				loading.style.display = 'none';
 
-			$.id('versioning').innerHTML = 'v' + version;
+				$.id('versioning').innerHTML = 'v' + version;
 
-			setTimeout(function () {
-				loading.parentNode.removeChild(loading);
+				setTimeout(function () {
+					loading.parentNode.removeChild(loading);
 
-				HEXA.userinfo.verify(function () {
-					// Check if we have some saved score to send to the leaderboard
-					if ( userinfo.isLogged() && userinfo.getScoreDelivery() ) {
-						utils.ajax('req/sendScore.php', {
-							post: userinfo.getScoreDelivery(true),
-							callback: function (result) {
-								result = w.JSON.parse(result);
-								if ( result.status == 'success' ) {
-									userinfo.setScoreDelivery();	// Clear the saved score
-									userinfo.setHighScore(result.score);
+					HEXA.userinfo.verify(function () {
+						// Check if we have some saved score to send to the leaderboard
+						if ( userinfo.isLogged() && userinfo.getScoreDelivery() ) {
+							utils.ajax('req/sendScore.php', {
+								post: userinfo.getScoreDelivery(true),
+								callback: function (result) {
+									result = w.JSON.parse(result);
+									if ( result.status == 'success' ) {
+										userinfo.setScoreDelivery();	// Clear the saved score
+										userinfo.setHighScore(result.score);
+									}
 								}
-							}
-						});
-					}
+							});
+						}
 
-					if ( userinfo.isLogged() && !userinfo.getName() ) {
-						HEXA.mainmenu.askName();
-					} else {
-						HEXA.mainmenu.enter();
-					}
-				});
-			}, 400);
-
+						if ( userinfo.isLogged() && !userinfo.getName() ) {
+							HEXA.mainmenu.askName();
+						} else {
+							HEXA.mainmenu.enter();
+						}
+					});
+				}, 400);
+			});
 		});
 	}
+
+	if ( !('devicePixelRatio' in w) ) w.devicePixelRatio = 1;
 
 	return init;
 })(this);

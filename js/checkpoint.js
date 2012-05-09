@@ -56,7 +56,7 @@ HEXA.checkpoint = (function () {
 				boardEl = $.id('boardwrapper');
 
 				checkpointEl = $.id('checkpoint');
-				checkpointEl.style.opacity = '0';
+				//checkpointEl.style.opacity = '0';
 				checkpointEl.style.left = '50%';
 				checkpointEl.offsetHeight;
 
@@ -67,6 +67,8 @@ HEXA.checkpoint = (function () {
 					value = menu[i].value.call();
 					el.innerHTML = menu[i].label.replace(/%s/, utils.formatNumber(value));
 					checkpointEl.appendChild(el);
+					el.style.opacity = '0';
+					//utils.translate(el, -el.offsetWidth-400, 0);
 					menu[i].el = el;
 				}
 				scoreboard.addScore(totalBonus);
@@ -75,17 +77,34 @@ HEXA.checkpoint = (function () {
 				buttonEl = utils.create('div');
 				buttonEl.className = 'button action';
 				buttonEl.innerHTML = 'Continue';
+				buttonEl.style.opacity = '0';
 
 				tapLayer = new HEXA.Tap(buttonEl);
-				utils.bind(buttonEl, 'tap', hide);
 
 				checkpointEl.appendChild(buttonEl);
 
-				utils.animate(checkpointEl, {
-					from: { opacity: 0 },
-					to: { opacity: 1 },
-					duration: 500
-				});
+				setTimeout(function () {
+					for ( i = 0; i < l; i++ ) {
+						utils.animate(menu[i].el, {
+							from: { scale: 0.7, opacity: 0 },
+							to: { scale: 1, opacity: 1 },
+							delay: i * 100,
+							easing: HEXA.easing.quadraticOut,
+							duration: 400
+						});
+					}
+
+					utils.animate(buttonEl, {
+						from: { scale: 0.7, opacity: 0 },
+						to: { scale: 1, opacity: 1 },
+						delay: i * 100,
+						easing: HEXA.easing.quadraticOut,
+						duration: 400,
+						callback: function () {
+							utils.bind(buttonEl, 'tap', hide);
+						}
+					});
+				}, 200);
 			}
 		});
 	}
@@ -93,22 +112,42 @@ HEXA.checkpoint = (function () {
 	function hide () {
 		var i = 0,
 			l = menu.length;
-		
-		checkpointEl.style.left = '-9999px';
 
 		utils.unbind(buttonEl, 'tap', hide);
-		tapLayer.destroy();
-		tapLayer = null;
 
-		buttonEl.parentNode.removeChild(buttonEl);
-		buttonEl = null;
-
-		for ( ; i < l; i++ ) {
-			menu[i].el.parentNode.removeChild(menu[i].el);
-			menu[i].el = null;
+		for ( i = 0; i < l; i++ ) {
+			utils.animate(menu[i].el, {
+				from: { scale: 1, opacity: 1 },
+				to: { scale: 0.7, opacity: 0 },
+				delay: i * 100,
+				easing: HEXA.easing.quadraticIn,
+				duration: 400
+			});
 		}
 
-		HEXA.wordhunt.init();
+		utils.animate(buttonEl, {
+			from: { scale: 1, opacity: 1 },
+			to: { scale: 0.7, opacity: 0 },
+			delay: i * 100,
+			easing: HEXA.easing.quadraticIn,
+			duration: 400,
+			callback: function () {
+				checkpointEl.style.left = '-9999px';
+
+				tapLayer.destroy();
+				tapLayer = null;
+
+				buttonEl.parentNode.removeChild(buttonEl);
+				buttonEl = null;
+
+				for ( i = 0; i < l; i++ ) {
+					menu[i].el.parentNode.removeChild(menu[i].el);
+					menu[i].el = null;
+				}
+
+				setTimeout(HEXA.wordhunt.init, 200);
+			}
+		});
 	}
 
 	return {

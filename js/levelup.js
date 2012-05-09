@@ -97,10 +97,15 @@ HEXA.levelup = (function () {
 		return currentLevel;
 	}
 
+	function getRemaining () {
+		return maxValue - currentValue;
+	}
+
 	return {
 		init: init,
 		set: set,
 		get: get,
+		getRemaining: getRemaining,
 		add: add,
 		setCallback: setCallback
 	};

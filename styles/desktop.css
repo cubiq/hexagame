@@ -1,14 +1,3 @@
-@font-face {
-	font-family: 'AliceRegular';
-	src: url('../fonts/alice-regular-webfont.eot');
-	src: url('../fonts/alice-regular-webfont.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/alice-regular-webfont.woff') format('woff'),
-		url('../fonts/alice-regular-webfont.ttf') format('truetype'),
-		url('../fonts/alice-regular-webfont.svg#AliceRegular') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-
 body {
 	background: #222;
 	-webkit-touch-callout: none;
@@ -98,7 +87,7 @@ a:hover {
 	position: absolute;
 	width: 80px;
 	height: 70px;
-	background: url(../images/desktop/tiles.png?v3) 0 0 no-repeat;
+	background: url(../images/desktop/tiles.png?v6) 0 0 no-repeat;
 	font-size: 36px;
 	text-align: center;
 	line-height: 70px;
@@ -145,7 +134,19 @@ a:hover {
 .tile.variant5 {
 	background-position: -640px 0;
 	color: #100c19;
-	text-shadow: 0 1px 1px #ce9aff;
+	text-shadow: 0 1px 1px #e4c7ff;
+}
+
+.tile.variant6 {
+	background-position: -720px 0;
+	color: #3b260e;
+	text-shadow: 0 1px 1px #fff5b2;
+}
+
+.tile.variant7 {
+	background-position: -800px 0;
+	color: #eee;
+	text-shadow: 0 -1px 1px #000;
 }
 
 .tile.pressed {
@@ -154,13 +155,17 @@ a:hover {
 	color: #171b39;
 }
 
+.tile.variant7.pressed,
+.tile.variant6.pressed,
 .tile.variant5.pressed,
 .tile.variant4.pressed {
 	background-position: -400px 0;
+	text-shadow: 0 1px 1px #fff;
 }
 
 .tile.wrong {
 	background-position: -480px 0;
+	text-shadow: 0 1px 1px #fff;
 	color: #2a1112;
 }
 
@@ -281,7 +286,7 @@ a:hover {
 	background-position: 91px 50%, 0 0;
 	border-right:1px solid #000;
 
-	-webkit-box-shadow:inset 0 1px 0 rgba(255,255,255,0.25),
+/*	-webkit-box-shadow:inset 0 1px 0 rgba(255,255,255,0.25),
 		inset 1px 0 0 rgba(255,255,255,0.25),
 		inset -1px 0 0 rgba(0,0,0,0.4),
 		inset 0 -1px 0 rgba(0,0,0,0.4);
@@ -300,7 +305,7 @@ a:hover {
 	box-shadow:inset 0 1px 0 rgba(255,255,255,0.25),
 		inset 1px 0 0 rgba(255,255,255,0.25),
 		inset -1px 0 0 rgba(0,0,0,0.4),
-		inset 0 -1px 0 rgba(0,0,0,0.4);
+		inset 0 -1px 0 rgba(0,0,0,0.4);*/
 }
 
 #gateRight {
@@ -313,7 +318,7 @@ a:hover {
 	border-left:1px solid #000;
 	margin-left:-1px;
 
-	-webkit-box-shadow:inset 0 1px 0 rgba(255,255,255,0.25),
+/*	-webkit-box-shadow:inset 0 1px 0 rgba(255,255,255,0.25),
 		inset 1px 0 0 rgba(255,255,255,0.25),
 		inset -1px 0 0 rgba(0,0,0,0.4),
 		inset 0 -1px 0 rgba(0,0,0,0.4);
@@ -332,7 +337,7 @@ a:hover {
 	box-shadow:inset 0 1px 0 rgba(255,255,255,0.25),
 		inset 1px 0 0 rgba(255,255,255,0.25),
 		inset -1px 0 0 rgba(0,0,0,0.4),
-		inset 0 -1px 0 rgba(0,0,0,0.4);
+		inset 0 -1px 0 rgba(0,0,0,0.4);*/
 }
 
 
@@ -349,24 +354,14 @@ a:hover {
 	width: 372px;
 	height: 546px;
 	margin-left: -186px;
-	background: url(../images/desktop/seamless-wood-small-dark.jpg?v2) 0 0 repeat;
+	background: url(../images/desktop/mainmenu-bg.png?v1) 0 0 no-repeat,
+		url(../images/desktop/seamless-wood-small-dark.jpg?v2) 0 0 repeat;
 	text-align: center;
 	overflow: hidden;
 	border-top: 1px solid #572518;
 	border-left: 1px solid #572518;
 	border-right: 1px solid #a0784d;
 	border-bottom: 1px solid #a0784d;
-	
-	-webkit-box-shadow: inset 0 0 30px rgba(10,0,0,0.5),
-		inset 0 0 5px rgba(0,0,0,0.7);
-	-moz-box-shadow: inset 0 0 30px rgba(10,0,0,0.5),
-		inset 0 0 5px rgba(0,0,0,0.7);
-	-ms-box-shadow: inset 0 0 30px rgba(10,0,0,0.5),
-		inset 0 0 5px rgba(0,0,0,0.7);
-	-o-box-shadow: inset 0 0 30px rgba(10,0,0,0.5),
-		inset 0 0 5px rgba(0,0,0,0.7);
-	box-shadow: inset 0 0 30px rgba(10,0,0,0.5),
-		inset 0 0 5px rgba(0,0,0,0.7);
 }
 
 #mainmenu .button {
@@ -447,26 +442,35 @@ a:hover {
 	left: 20px;
 	top: 50%;
 	margin-top: -339px;
-	background: url(../images/desktop/board.png?v2) 0 0 no-repeat;
+/*	-webkit-border-radius:2px;
+	-moz-border-radius:2px;
+	-ms-border-radius:2px;
+	-o-border-radius:2px;
+	border-radius:2px;
+	background: url(../images/desktop/seamless-wood-small-dark.jpg?v2) 0 0 repeat;
+	border:1px solid #000;*/
+	border-width:12px;
+	-webkit-border-image:url(../images/desktop/board-border.png?v2) 12 12 12 12 repeat;
+	-moz-border-image:url(../images/desktop/board-border.png?v2) 12 12 12 12 repeat;
+	-ms-border-image:url(../images/desktop/board-border.png?v2) 12 12 12 12 repeat;
+	-o-border-image:url(../images/desktop/board-border.png?v2) 12 12 12 12 repeat;
+	border-image:url(../images/desktop/board-border.png?v2) 12 12 12 12 repeat;
 }
 
 #boardcloth {
 	position: absolute;
-	top:13px;
-	left:13px;
-	bottom:13px;
-	right:13px;
+	top:0;
+	left:0px;
+	bottom:0px;
+	right:0px;
 	background: url(../images/desktop/cloth.png?v2) 0 0 repeat;
-	-webkit-box-shadow:inset 4px 4px 5px rgba(255,255,255,0.2),
-		inset -4px -4px 5px rgba(0,0,0,0.3);
-	-moz-box-shadow:inset 4px 4px 5px rgba(255,255,255,0.2),
-		inset -4px -4px 5px rgba(0,0,0,0.3);
-	-ms-box-shadow:inset 4px 4px 5px rgba(255,255,255,0.2),
-		inset -4px -4px 5px rgba(0,0,0,0.3);
-	-o-box-shadow:inset 4px 4px 5px rgba(255,255,255,0.2),
-		inset -4px -4px 5px rgba(0,0,0,0.3);
-	box-shadow:inset 4px 4px 5px rgba(255,255,255,0.2),
-		inset -4px -4px 5px rgba(0,0,0,0.3);
+	border-width:8px;
+	-webkit-border-image:url(../images/desktop/boardcloth-border.png?v2) 8 8 8 8 repeat;
+	-moz-border-image:url(../images/desktop/boardcloth-border.png?v2) 8 8 8 8 repeat;
+	-ms-border-image:url(../images/desktop/boardcloth-border.png?v2) 8 8 8 8 repeat;
+	-o-border-image:url(../images/desktop/boardcloth-border.png?v2) 8 8 8 8 repeat;
+	border-image:url(../images/desktop/boardcloth-border.png?v2) 8 8 8 8 repeat;
+	text-shadow:0 1px 0 #1e2d19;
 }
 
 #board {
@@ -488,7 +492,7 @@ a:hover {
  */
 #scoreboard {
 	position: absolute;
-	z-index: 50;
+	z-index: 35;
 	width:240px;
 	height:660px;
 	right:25px;
@@ -523,18 +527,22 @@ a:hover {
 	width:240px;
 	height:77px;
 	margin-bottom: 15px;
-	padding:11px;
-	border-radius:5px;
+	padding:12px;
+	background:url(../images/desktop/scoreboard-slot.png?v2) 0 0 no-repeat;
+	-webkit-background-size:240px 77px;
+	background-size:240px 77px;
+
+/*	border-radius:5px;
 	background:rgba(0,0,0,0.4);
 	box-shadow:inset 0 0 5px #000,
 		0 1px 0 rgba(255,255,255,0.3),
-		0 -1px 0 rgba(0,0,0,0.1);
+		0 -1px 0 rgba(0,0,0,0.1);*/
 }
 
 #scoreboard .field > div {
 	width: 100%;
 	height: 100%;
-	background: #161413;
+/*	background: #161413;
 	background: -webkit-linear-gradient(top, #0c0809, #261812);
 	background: -moz-linear-gradient(top, #0c0809, #261812);
 	background: -ms-linear-gradient(top, #0c0809, #261812);
@@ -543,7 +551,7 @@ a:hover {
 	border-radius:4px;
 	box-shadow:inset 0 0 5px #000,
 		0 1px 0 rgba(255,255,255,0.2),
-		0 -1px 0 rgba(0,0,0,0.1);
+		0 -1px 0 rgba(0,0,0,0.1);*/
 }
 
 #sbWords {
@@ -552,6 +560,9 @@ a:hover {
 #scoreboard .field.half {
 	width:112px;
 	float: left;
+	background:url(../images/desktop/scoreboard-slot-half.png?v1) 0 0 no-repeat;
+	-webkit-background-size:112px 77px;
+	background-size:112px 77px;
 }
 
 #sbLevel .label {
@@ -561,6 +572,10 @@ a:hover {
 #sbLevel .value {
 	width:60px;
 	padding: 0;
+}
+
+#sbBonusWord .value {
+	font-size:34px;
 }
 
 #swapSlots {
@@ -576,13 +591,24 @@ a:hover {
 	width:24px;
 	height:24px;
 	margin-left: 2px;
-	background-color: #DDD;
-	-webkit-border-radius:4px;
-	-moz-border-radius:4px;
-	-ms-border-radius:4px;
-	-o-border-radius:4px;
-	border-radius:4px;
+	-webkit-border-radius:7px;
+	-moz-border-radius:7px;
+	-ms-border-radius:7px;
+	-o-border-radius:7px;
+	border-radius:7px;
 	text-indent:-9999em;
+	background:url(../images/desktop/swaps-overlay.png?v1) 0 0 no-repeat,
+		-webkit-linear-gradient(top, #7ee891, #2c5832) -24px 0 no-repeat;
+	background:url(../images/desktop/swaps-overlay.png?v1) 0 0 no-repeat,
+		-moz-linear-gradient(top, #7ee891, #2c5832) -24px 0 no-repeat;
+	background:url(../images/desktop/swaps-overlay.png?v1) 0 0 no-repeat,
+		-ms-linear-gradient(top, #7ee891, #2c5832) -24px 0 no-repeat;
+	background:url(../images/desktop/swaps-overlay.png?v1) 0 0 no-repeat,
+		-o-linear-gradient(top, #7ee891, #2c5832) -24px 0 no-repeat;
+	background:url(../images/desktop/swaps-overlay.png?v1) 0 0 no-repeat,
+		linear-gradient(top, #7ee891, #2c5832) -24px 0 no-repeat;
+
+/*	background-color: #DDD;
 	border:1px solid #000;
 	background:-webkit-linear-gradient(top, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0) 50%) 0 0 no-repeat,
 		-webkit-linear-gradient(top, #7ee891, #2c5832) -24px 0 no-repeat;
@@ -608,7 +634,7 @@ a:hover {
 		0 0 4px #000;
 	box-shadow:inset 0 1px 0 rgba(255,255,255,0.4),
 		inset 0 0 6px rgba(255,255,255,0.3),
-		0 0 4px #000;
+		0 0 4px #000;*/
 }
 
 #swapSlots li.active {
@@ -618,10 +644,10 @@ a:hover {
 #levelProgress {
 	position: absolute;
 	z-index: 50;
-	right: 15px;
-	top: 15px;
-	width: 154px;
-	height: 47px;
+	right: 16px;
+	top: 16px;
+	width: 152px;
+	height: 45px;
 	background:-webkit-linear-gradient(top, #399df3, #173484) -154px 0 no-repeat;
 	background:-moz-linear-gradient(top, #399df3, #173484) -154px 0 no-repeat;
 	background:-ms-linear-gradient(top, #399df3, #173484) -154px 0 no-repeat;
@@ -632,11 +658,6 @@ a:hover {
 	-ms-border-radius:4px;
 	-o-border-radius:4px;
 	border-radius:4px;
-	-webkit-box-shadow:inset 0 1px 0 rgba(255,255,255,0.4), 0 0 4px #000;
-	-moz-box-shadow:inset 0 1px 0 rgba(255,255,255,0.4), 0 0 4px #000;
-	-ms-box-shadow:inset 0 1px 0 rgba(255,255,255,0.4), 0 0 4px #000;
-	-o-box-shadow:inset 0 1px 0 rgba(255,255,255,0.4), 0 0 4px #000;
-	box-shadow:inset 0 1px 0 rgba(255,255,255,0.4), 0 0 4px #000;
 }
 
 #levelProgressOverlay {
@@ -646,21 +667,9 @@ a:hover {
 	top: 0;
 	width: 100%;
 	height: 100%;
-	-webkit-box-shadow:inset 0 0 8px rgba(255,255,255,0.3);
-	-moz-box-shadow:inset 0 0 8px rgba(255,255,255,0.3);
-	-ms-box-shadow:inset 0 0 8px rgba(255,255,255,0.3);
-	-o-box-shadow:inset 0 0 8px rgba(255,255,255,0.3);
-	box-shadow:inset 0 0 8px rgba(255,255,255,0.3);
-	-webkit-border-radius:4px;
-	-moz-border-radius:4px;
-	-ms-border-radius:4px;
-	-o-border-radius:4px;
-	border-radius:4px;
-	background:-webkit-linear-gradient(top, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0) 50%) 0 0 no-repeat;
-	background:-moz-linear-gradient(top, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0) 50%) 0 0 no-repeat;
-	background:-ms-linear-gradient(top, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0) 50%) 0 0 no-repeat;
-	background:-o-linear-gradient(top, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0) 50%) 0 0 no-repeat;
-	background:linear-gradient(top, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0) 50%) 0 0 no-repeat;
+	background:url(../images/desktop/levelup-overlay.png?v1) 0 0 no-repeat;
+	-webkit-background-size:152px 45px;
+	background-size:152px 45px;
 }
 
 
@@ -715,14 +724,14 @@ a:hover {
 #readyGo {
 	position:absolute;
 	z-index:100;
-	width: 437px;
+	width: 720px;
 	height: 165px;
 	top: 50%;
 	left: 50%;
-	margin-left: -218px;
+	margin-left: -360px;
 	margin-top: -82px;
 	overflow: hidden;
-	background-position: -141px 165px;
+	background-position: 0 165px;
 	-webkit-mask-image:-webkit-linear-gradient(top, rgba(0,0,0,0) 0, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, rgba(0,0,0,0) 100%);
 	-moz-mask-image:-moz-linear-gradient(top, rgba(0,0,0,0) 0, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, rgba(0,0,0,0) 100%);
 	-ms-mask-image:-ms-linear-gradient(top, rgba(0,0,0,0) 0, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, rgba(0,0,0,0) 100%);
@@ -796,11 +805,11 @@ a:hover {
 	background:rgba(0,0,0,0.8);
 	width:100%;
 	height:100%;
-	-webkit-box-shadow:inset 0 0 20px #000;
+/*	-webkit-box-shadow:inset 0 0 20px #000;
 	-moz-box-shadow:inset 0 0 20px #000;
 	-ms-box-shadow:inset 0 0 20px #000;
 	-o-box-shadow:inset 0 0 20px #000;
-	box-shadow:inset 0 0 20px #000;
+	box-shadow:inset 0 0 20px #000;*/
 }
 
 #popup.alt > div {
@@ -850,6 +859,7 @@ a:hover {
 	font-size: 40px;
 }
 
+/*
 #gameResult .button.action {
 	font-size:24px;
 }
@@ -858,7 +868,7 @@ a:hover {
 #gameResult .button.action:active {
 	font-size:23px;
 }
-
+*/
 
 
 /**
@@ -872,7 +882,7 @@ a:hover {
 	width: 480px;
 	margin-left: -240px;
 	left: -9999px;
-	top: 70px;
+	top: 60px;
 	text-align: center;
  }
 
@@ -977,19 +987,17 @@ a:hover {
 .levelUp {
 	position: absolute;
 	z-index: 100;
-/*	background:url(../images/desktop/level-up.png?v2) 50% 0 no-repeat;*/
-	background-position: 50% -654px;
-	width: 700px;
-	height: 169px;
-	margin-left: -350px;
-	margin-top: -84px;
+	background-position: 0 -654px;
+	width: 720px;
+	height: 165px;
+	margin-left: -360px;
+	margin-top: -82px;
 	left: 50%;
 	top: 50%;
 }
 
 .timesUp {
-	/*background-image:url(../images/desktop/time-s-up.png?v2);*/
-	background-position: 50% -488px;
+	background-position: 0 -488px;
 }
 
 
@@ -1286,17 +1294,17 @@ a:hover {
 	width:224px;
 	top:133px;
 	bottom:38px;
-	left:34px;
+	left:30px;
 }
 
 #chartSelect .switch {
 	display:inline-block;
-	width:224px;
-	height:56px; line-height:44px;
+	width:231px;
+	height:63px; line-height:63px;
 	text-align:center;
-	background: url(../images/desktop/wooden-button.png?v2) 0 0 no-repeat;
+	background: url(../images/desktop/wooden-button.png?v4) 0 0 no-repeat;
 	color:#100704;
-	font-size:26px;
+	font-size:24px;
 	text-shadow:0 1px 1px rgba(255,255,220,0.3), 0 -1px 0 rgba(0,0,0,0.2), 0 0 5px rgba(255,255,220,0.2);
 	margin-bottom:20px;
 	cursor: default;
@@ -1307,6 +1315,7 @@ a:hover {
 	line-height:64px;
 	color:#f1cf7e;
 	text-shadow:0 1px 1px rgba(255,255,220,0.1), 0 -1px 0 rgba(0,0,0,0.5), 0 0 5px rgba(255,255,220,0.4);
+	font-size:23px;
 }
 
 #charts h1 {
@@ -1415,4 +1424,68 @@ a:hover {
 	text-shadow:0 1px 0 rgba(0,0,0,0.5);
 	background:rgba(255,255,240,0.1);
 	cursor: default;
+}
+
+#news {
+	display: none;
+	position: absolute;
+	bottom:20px;
+	right:20px;
+	color:#ffd;
+	background:rgba(20,0,0,0.25);
+	padding:10px;
+	width:180px;
+	border: 1px solid #000;
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
+	-ms-border-radius:4px;
+	-o-border-radius:4px;
+	border-radius:4px;
+	-webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.2),
+		inset 0 1px 0 rgba(255,255,255,0.3);
+	-moz-box-shadow: 0 1px 0 rgba(255,255,255,0.2);
+	-ms-box-shadow: 0 1px 0 rgba(255,255,255,0.2);
+	-o-box-shadow: 0 1px 0 rgba(255,255,255,0.2);
+	box-shadow: 0 1px 0 rgba(255,255,255,0.2),
+		inset 0 1px 0 rgba(255,255,255,0.3),
+		inset 0 -1px 0 rgba(100,50,0,0.6);
+	text-shadow:0 1px 0 rgba(0,0,0,0.5);
+}
+
+#news span {
+	display: block;
+	font-size:15px;
+}
+
+#news .title {
+	text-align:center;
+	font-size:18px;
+	margin-bottom:6px;
+}
+
+#news a {
+	color:#ffe834;
+}
+
+#news a:hover {
+	color:#a9ec24;
+}
+
+/**
+ *
+ * Tutorial
+ *
+ */
+#tutorial {
+	font-size:22px;
+	text-align:center;
+	padding:10px;
+	width:100%;
+}
+
+#tutorial video {
+	width:320px;
+	height:240px;
+	border:2px solid #000;
+	display: inline-block;
 }

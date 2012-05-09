@@ -1,14 +1,3 @@
-@font-face {
-	font-family: 'AliceRegular';
-	src: url('../fonts/alice-regular-webfont.eot');
-	src: url('../fonts/alice-regular-webfont.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/alice-regular-webfont.woff') format('woff'),
-		url('../fonts/alice-regular-webfont.ttf') format('truetype'),
-		url('../fonts/alice-regular-webfont.svg#AliceRegular') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-
 body {
 	background: #222;
 	-webkit-touch-callout: none;
@@ -67,7 +56,9 @@ a:hover {
 	position: absolute;
 	width: 87px;
 	height: 76px;
-	background: url(../images/tablet/tiles.png?v4) 0 0 no-repeat;
+	background: url(../images/tablet/tiles.png?v6) 0 0 no-repeat;
+	-webkit-background-size:1044px 76px;
+	background-size:1044px 76px;
 	font-size: 36px;
 	text-align: center;
 	line-height: 76px;
@@ -77,10 +68,13 @@ a:hover {
 	cursor: default;
 }
 
+
 .landscape .tile {
 	width: 80px;
 	height: 70px;
-	background: url(../images/desktop/tiles.png?v4) 0 0 no-repeat;
+	background: url(../images/desktop/tiles.png?v6) 0 0 no-repeat;
+	-webkit-background-size:960px 70px;
+	background-size:960px 70px;
 	line-height: 70px;
 }
 
@@ -90,6 +84,8 @@ a:hover {
 	font-size: 34px;
 	line-height: 79px;
 	text-shadow: 0 -1px 1px rgba(0,0,0,0.6);
+	-webkit-background-size:345px 76px;
+	background-size:345px 76px;
 }
 
 .tileButton.tapPressed {
@@ -119,19 +115,35 @@ a:hover {
 	text-shadow: 0 1px 1px #ce9aff;
 }
 
+.tile.variant6 {
+	background-position: -783px 0;
+	color: #3b260e;
+	text-shadow: 0 1px 1px #fff5b2;
+}
+
+.tile.variant7 {
+	background-position: -870px 0;
+	color: #eee;
+	text-shadow: 0 -1px 1px #000;
+}
+
 .tile.pressed {
 	background-position: -261px 0;
 	line-height: 80px;
 	color: #171b39;
 }
 
+.tile.variant7.pressed,
+.tile.variant6.pressed,
 .tile.variant5.pressed,
 .tile.variant4.pressed {
 	background-position: -435px 0;
+	text-shadow: 0 1px 1px #fff;
 }
 
 .tile.wrong {
 	background-position: -522px 0;
+	text-shadow: 0 1px 1px #fff;
 	color: #2a1112;
 }
 
@@ -161,10 +173,19 @@ a:hover {
 	background-position: -640px 0;
 }
 
+.landscape .tile.variant6 {
+	background-position: -720px 0;
+}
+
+.landscape .tile.variant7 {
+	background-position: -800px 0;
+}
+
 .landscape .tile.pressed {
 	background-position: -240px 0;
 }
 
+.landscape .tile.variant6.pressed,
 .landscape .tile.variant5.pressed,
 .landscape .tile.variant4.pressed {
 	background-position: -400px 0;
@@ -219,6 +240,8 @@ a:hover {
 	margin: 0 0;
 	background-image: url(../images/desktop/logo.png?v2);
 	background-repeat: no-repeat;
+	-webkit-background-size:846px 98px;
+	background-size:846px 98px;
 	-webkit-transform:translateZ(0);
 	-moz-transform:translateZ(0);
 	-ms-transform:translateZ(0);
@@ -279,6 +302,8 @@ a:hover {
 
 	background: url(../images/desktop/h-engrave.png?v2) 0 0 no-repeat,
 		url(../images/desktop/seamless-wood-small.jpg?v2) 0 0 repeat;
+	-webkit-background-size:184px 212px, auto auto;
+	background-size:184px 212px, auto auto;
 }
 
 #gateLeft {
@@ -287,10 +312,10 @@ a:hover {
 	height: 100%;
 	top: 0;
 	left: 0;
-	background-position: 91px 50%, 0 0;
+	background-position: 91px 50%, 0 0 !important;
 	border-right:1px solid #000;
 
-	-webkit-box-shadow:inset 0 1px 0 rgba(255,255,255,0.25),
+/*	-webkit-box-shadow:inset 0 1px 0 rgba(255,255,255,0.25),
 		inset 1px 0 0 rgba(255,255,255,0.25),
 		inset -1px 0 0 rgba(0,0,0,0.4),
 		inset 0 -1px 0 rgba(0,0,0,0.4);
@@ -309,7 +334,7 @@ a:hover {
 	box-shadow:inset 0 1px 0 rgba(255,255,255,0.25),
 		inset 1px 0 0 rgba(255,255,255,0.25),
 		inset -1px 0 0 rgba(0,0,0,0.4),
-		inset 0 -1px 0 rgba(0,0,0,0.4);
+		inset 0 -1px 0 rgba(0,0,0,0.4);*/
 }
 
 .landscape #gateLeft {
@@ -322,11 +347,11 @@ a:hover {
 	height: 100%;
 	top: 0;
 	left: 50%;
-	background-position: -91px 50%, -19px 0;
+	background-position: -91px 50%, -19px 0 !important;
 	border-left:1px solid #000;
 	margin-left:-1px;
 
-	-webkit-box-shadow:inset 0 1px 0 rgba(255,255,255,0.25),
+/*	-webkit-box-shadow:inset 0 1px 0 rgba(255,255,255,0.25),
 		inset 1px 0 0 rgba(255,255,255,0.25),
 		inset -1px 0 0 rgba(0,0,0,0.4),
 		inset 0 -1px 0 rgba(0,0,0,0.4);
@@ -345,7 +370,7 @@ a:hover {
 	box-shadow:inset 0 1px 0 rgba(255,255,255,0.25),
 		inset 1px 0 0 rgba(255,255,255,0.25),
 		inset -1px 0 0 rgba(0,0,0,0.4),
-		inset 0 -1px 0 rgba(0,0,0,0.4);
+		inset 0 -1px 0 rgba(0,0,0,0.4);*/
 }
 
 .landscape #gateRight {
@@ -366,7 +391,9 @@ a:hover {
 	height: 546px;
 	margin-left: -186px;
 	margin-top: -273px;
-	background: url(../images/desktop/seamless-wood-small-dark.jpg?v2) 0 0 repeat;
+	background: url(../images/desktop/mainmenu-bg.png?v1) 0 0 no-repeat,
+		url(../images/desktop/seamless-wood-small-dark.jpg?v2) 0 0 repeat;
+	background-size:372px 546px, auto auto;
 	text-align: center;
 	overflow: hidden;
 	border-top: 1px solid #572518;
@@ -374,7 +401,7 @@ a:hover {
 	border-right: 1px solid #a0784d;
 	border-bottom: 1px solid #a0784d;
 	
-	-webkit-box-shadow: inset 0 0 30px rgba(10,0,0,0.5),
+/*	-webkit-box-shadow: inset 0 0 30px rgba(10,0,0,0.5),
 		inset 0 0 5px rgba(0,0,0,0.7);
 	-moz-box-shadow: inset 0 0 30px rgba(10,0,0,0.5),
 		inset 0 0 5px rgba(0,0,0,0.7);
@@ -383,7 +410,7 @@ a:hover {
 	-o-box-shadow: inset 0 0 30px rgba(10,0,0,0.5),
 		inset 0 0 5px rgba(0,0,0,0.7);
 	box-shadow: inset 0 0 30px rgba(10,0,0,0.5),
-		inset 0 0 5px rgba(0,0,0,0.7);
+		inset 0 0 5px rgba(0,0,0,0.7);*/
 	
 	padding-top: 20px;
 }
@@ -391,6 +418,9 @@ a:hover {
 .landscape #mainmenu {
 	width: 710px;
 	height: 364px;
+	background: url(../images/desktop/mainmenu-landscape-bg.png?v1) 0 0 no-repeat,
+		url(../images/desktop/seamless-wood-small-dark.jpg?v2) 0 0 repeat;
+	background-size:710px 364px, auto auto;
 	margin-left: -355px;
 	margin-top: -182px;
 }
@@ -406,6 +436,8 @@ a:hover {
 .button {
 	display: inline-block;
 	background: url(../images/desktop/buttons.png?v2) 0 0 no-repeat;
+	-webkit-background-size:298px 595px;
+	background-size:298px 595px;
 
 	text-shadow: 0 -1px 1px rgba(0,0,0,0.6);
 
@@ -465,7 +497,12 @@ a:hover {
 	left: 50%;
 	bottom: 20px;
 	margin-left: -347px;
-	background: url(../images/tablet/board.png?v2) 0 0 no-repeat;
+	border-width:12px;
+	-webkit-border-image:url(../images/desktop/board-border.png?v2) 12 12 12 12 repeat;
+	-moz-border-image:url(../images/desktop/board-border.png?v2) 12 12 12 12 repeat;
+	-ms-border-image:url(../images/desktop/board-border.png?v2) 12 12 12 12 repeat;
+	-o-border-image:url(../images/desktop/board-border.png?v2) 12 12 12 12 repeat;
+	border-image:url(../images/desktop/board-border.png?v2) 12 12 12 12 repeat;
 }
 
 .landscape #boardwrapper {
@@ -481,21 +518,27 @@ a:hover {
 
 #boardcloth {
 	position: absolute;
-	top:13px;
-	left:13px;
-	bottom:13px;
-	right:13px;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
 	background: url(../images/desktop/cloth.png?v2) 0 0 repeat;
-	box-shadow:inset 4px 4px 5px rgba(255,255,255,0.2),
-		inset -4px -4px 5px rgba(0,0,0,0.3);
+	border-width:8px;
+	-webkit-border-image:url(../images/desktop/boardcloth-border.png?v2) 8 8 8 8 repeat;
+	-moz-border-image:url(../images/desktop/boardcloth-border.png?v2) 8 8 8 8 repeat;
+	-ms-border-image:url(../images/desktop/boardcloth-border.png?v2) 8 8 8 8 repeat;
+	-o-border-image:url(../images/desktop/boardcloth-border.png?v2) 8 8 8 8 repeat;
+	border-image:url(../images/desktop/boardcloth-border.png?v2) 8 8 8 8 repeat;
+	text-shadow:0 1px 0 #1e2d19;
 }
-
+/*
 .landscape #boardcloth {
 	top:12px;
 	left:12px;
 	bottom:12px;
 	right:12px;
 }
+*/
 
 #board {
 	position: absolute;
@@ -524,7 +567,7 @@ a:hover {
  */
 #scoreboard {
 	position: absolute;
-	z-index: 50;
+	z-index: 30;
 	width:100%;
 	left:0;
 	top:20px;
@@ -569,32 +612,44 @@ a:hover {
 	margin-bottom:10px;
 	margin-right:10px;
 	padding:8px;
+	background:url(../images/tablet/scoreboard-slot@2x.png?v1) 0 -66px no-repeat;
+	-webkit-background-size:230px 132px;
+	background-size:230px 132px;
+
+/*	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	-ms-border-radius:5px;
+	-o-border-radius:5px;
 	border-radius:5px;
 	background:rgba(0,0,0,0.4);
 	box-shadow:inset 0 0 5px #000,
 		0 1px 0 rgba(255,255,255,0.3),
-		0 -1px 0 rgba(0,0,0,0.1);
+		0 -1px 0 rgba(0,0,0,0.1);*/
 }
 
 .landscape #scoreboard .field {
 	height:66px;
 	margin-bottom:15px;
+	background-position:0 0;
 }
 
 #scoreboard .field > div {
 	width: 100%;
 	height: 100%;
-	background: #201213;
+/*	background: #201213;
 	border-radius:4px;
 	box-shadow:inset 0 0 5px #000,
 		0 1px 0 rgba(255,255,255,0.2),
-		0 -1px 0 rgba(0,0,0,0.1);
+		0 -1px 0 rgba(0,0,0,0.1);*/
 }
 
 
 #scoreboard .field.half {
 	width:110px;
 	float: left;
+	background:url(../images/tablet/scoreboard-slot-half@2x.png?v1) 0 -66px no-repeat;
+	-webkit-background-size:110px 132px;
+	background-size:110px 132px;
 }
 
 #sbLevel .label {
@@ -619,14 +674,25 @@ a:hover {
 	width:20px;
 	height:20px;
 	margin-left: 2px;
-	background-color: #DDD;
-	-webkit-border-radius:4px;
-	-moz-border-radius:4px;
-	-ms-border-radius:4px;
-	-o-border-radius:4px;
-	border-radius:4px;
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	-ms-border-radius:5px;
+	-o-border-radius:5px;
+	border-radius:5px;
 	text-indent:-9999em;
-	border:1px solid #000;
+	background:url(../images/tablet/swaps-overlay.png?v1) 0 0 no-repeat,
+		-webkit-linear-gradient(top, #7ee891, #2c5832) -24px 0 no-repeat;
+	background:url(../images/tablet/swaps-overlay.png?v1) 0 0 no-repeat,
+		-moz-linear-gradient(top, #7ee891, #2c5832) -24px 0 no-repeat;
+	background:url(../images/tablet/swaps-overlay.png?v1) 0 0 no-repeat,
+		-ms-linear-gradient(top, #7ee891, #2c5832) -24px 0 no-repeat;
+	background:url(../images/tablet/swaps-overlay.png?v1) 0 0 no-repeat,
+		-o-linear-gradient(top, #7ee891, #2c5832) -24px 0 no-repeat;
+	background:url(../images/tablet/swaps-overlay.png?v1) 0 0 no-repeat,
+		linear-gradient(top, #7ee891, #2c5832) -24px 0 no-repeat;
+	-webkit-background-size:20px;
+	background-size:20px;
+/*	border:1px solid #000;
 	background:-webkit-linear-gradient(top, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0) 50%) 0 0 no-repeat,
 		-webkit-linear-gradient(top, #7ee891, #2c5832) -24px 0 no-repeat;
 	background:-moz-linear-gradient(top, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0) 50%) 0 0 no-repeat,
@@ -651,7 +717,7 @@ a:hover {
 		0 0 4px #000;
 	box-shadow:inset 0 1px 0 rgba(255,255,255,0.4),
 		inset 0 0 6px rgba(255,255,255,0.3),
-		0 0 4px #000;
+		0 0 4px #000;*/
 }
 
 #swapSlots li.active {
@@ -675,11 +741,11 @@ a:hover {
 	-ms-border-radius:4px;
 	-o-border-radius:4px;
 	border-radius:4px;
-	-webkit-box-shadow:inset 0 1px 0 rgba(255,255,255,0.4);
+/*	-webkit-box-shadow:inset 0 1px 0 rgba(255,255,255,0.4);
 	-moz-box-shadow:inset 0 1px 0 rgba(255,255,255,0.4);
 	-ms-box-shadow:inset 0 1px 0 rgba(255,255,255,0.4);
 	-o-box-shadow:inset 0 1px 0 rgba(255,255,255,0.4);
-	box-shadow:inset 0 1px 0 rgba(255,255,255,0.4);
+	box-shadow:inset 0 1px 0 rgba(255,255,255,0.4);*/
 }
 
 .landscape #levelProgress {
@@ -694,7 +760,11 @@ a:hover {
 	top: 0;
 	width: 100%;
 	height: 100%;
-	-webkit-box-shadow:inset 0 0 8px rgba(255,255,255,0.3),
+	background:url(../images/tablet/levelup-overlay.png?v1) 0 -38px no-repeat;
+	-webkit-background-size:144px 76px;
+	background-size:144px 76px;
+
+/*	-webkit-box-shadow:inset 0 0 8px rgba(255,255,255,0.3),
 		0 0 4px #000;
 	-moz-box-shadow:inset 0 0 8px rgba(255,255,255,0.3),
 		0 0 4px #000;
@@ -713,7 +783,7 @@ a:hover {
 	background:-moz-linear-gradient(top, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0) 50%) 0 0 no-repeat;
 	background:-ms-linear-gradient(top, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0) 50%) 0 0 no-repeat;
 	background:-o-linear-gradient(top, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0) 50%) 0 0 no-repeat;
-	background:linear-gradient(top, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0) 50%) 0 0 no-repeat;
+	background:linear-gradient(top, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0) 50%) 0 0 no-repeat;*/
 }
 
 #sbTimeMin {
@@ -767,14 +837,14 @@ a:hover {
 #readyGo {
 	position:absolute;
 	z-index:100;
-	width: 437px;
+	width: 720px;
 	height: 165px;
 	top: 50%;
 	left: 50%;
-	margin-left: -218px;
+	margin-left: -360px;
 	margin-top: -82px;
 	overflow: hidden;
-	background-position: -141px 165px;
+	background-position: 0 165px;
 /*	background: url(../images/desktop/ready-go.png?v2) 0 165px no-repeat;*/
 	-webkit-mask-image:-webkit-linear-gradient(top, rgba(0,0,0,0) 0, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, rgba(0,0,0,0) 100%);
 	-moz-mask-image:-moz-linear-gradient(top, rgba(0,0,0,0) 0, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, rgba(0,0,0,0) 100%);
@@ -833,6 +903,7 @@ a:hover {
 	-moz-border-image:url(../images/desktop/popup-border.png?v2) 31 31 31 31 repeat;
 	-ms-border-image:url(../images/desktop/popup-border.png?v2) 31 31 31 31 repeat;
 	-o-border-image:url(../images/desktop/popup-border.png?v2) 31 31 31 31 repeat;
+	border-image:url(../images/desktop/popup-border.png?v2) 31 31 31 31 repeat;
 }
 
 #popup h1 {
@@ -850,11 +921,11 @@ a:hover {
 	background:rgba(0,0,0,0.8);
 	width:100%;
 	height:100%;
-	-webkit-box-shadow:inset 0 0 20px #000;
+/*	-webkit-box-shadow:inset 0 0 20px #000;
 	-moz-box-shadow:inset 0 0 20px #000;
 	-ms-box-shadow:inset 0 0 20px #000;
 	-o-box-shadow:inset 0 0 20px #000;
-	box-shadow:inset 0 0 20px #000;
+	box-shadow:inset 0 0 20px #000;*/
 }
 
 #popup.alt > div {
@@ -904,6 +975,7 @@ a:hover {
 	font-size: 40px;
 }
 
+/*
 #gameResult .button.action {
 	font-size:24px;
 }
@@ -912,7 +984,7 @@ a:hover {
 #gameResult .button.action:active {
 	font-size:23px;
 }
-
+*/
 
 
 /**
@@ -926,12 +998,12 @@ a:hover {
 	width: 480px;
 	margin-left: -240px;
 	left: -9999px;
-	top: 95px;
+	top: 85px;
 	text-align: center;
 }
 
 .landscape #checkpoint {
-	top: 70px;
+	top: 60px;
 }
 
 .checkpoint {
@@ -1035,17 +1107,17 @@ a:hover {
 .levelUp {
 	position: absolute;
 	z-index: 100;
-	background-position: 50% -654px;
-	width: 700px;
-	height: 169px;
-	margin-left: -350px;
-	margin-top: -84px;
+	background-position: 0 -654px;
+	width: 720px;
+	height: 165px;
+	margin-left: -360px;
+	margin-top: -82px;
 	left: 50%;
 	top: 50%;
 }
 
 .timesUp {
-	background-position: 50% -488px;
+	background-position: 0 -488px;
 }
 
 /**
@@ -1379,15 +1451,14 @@ a:hover {
 #chartSelect .switch {
 	display:block;
 	float: left;
-	width:224px;
-	height:56px; line-height:44px;
+	width:231px;
+	height:63px; line-height:63px;
 	text-align:center;
-	background:url(../images/desktop/wooden-button.png?v2) 0 0 no-repeat;
+	background:url(../images/desktop/wooden-button.png?v4) 0 0 no-repeat;
 	color:#100704;
-	font-size:26px;
+	font-size:24px;
 	text-shadow:0 1px 0 rgba(255,255,220,0.3), 0 -1px 0 rgba(0,0,0,0.2), 0 0 5px rgba(255,255,220,0.2);
-	cursor: default;
-	margin:0 10px;
+	margin:0 5px;
 	overflow: hidden;
 }
 
@@ -1397,7 +1468,6 @@ a:hover {
 
 #chartSelect .switch.active {
 	background-position:0 100%;
-	line-height:64px;
 	color:#f1cf7e;
 	text-shadow:0 1px 0 rgba(255,255,220,0.1), 0 -1px 0 rgba(0,0,0,0.5), 0 0 5px rgba(255,255,220,0.4);
 }
@@ -1513,4 +1583,136 @@ a:hover {
 	text-shadow:0 1px 0 rgba(0,0,0,0.5);
 	background:rgba(255,255,240,0.1);
 	cursor: default;
+}
+
+#news {
+	position: absolute;
+	bottom:20px;
+	right:20px;
+	color:#ffd;
+	background:rgba(20,0,0,0.25);
+	padding:10px;
+	width:200px;
+	margin-left:-100px;
+	border: 1px solid #000;
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
+	-ms-border-radius:4px;
+	-o-border-radius:4px;
+	border-radius:4px;
+	-webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.2),
+		inset 0 1px 0 rgba(255,255,255,0.3);
+	-moz-box-shadow: 0 1px 0 rgba(255,255,255,0.2);
+	-ms-box-shadow: 0 1px 0 rgba(255,255,255,0.2);
+	-o-box-shadow: 0 1px 0 rgba(255,255,255,0.2);
+	box-shadow: 0 1px 0 rgba(255,255,255,0.2),
+		inset 0 1px 0 rgba(255,255,255,0.3),
+		inset 0 -1px 0 rgba(100,50,0,0.6);
+	text-shadow:0 1px 0 rgba(0,0,0,0.5);
+}
+
+#news span {
+	display: block;
+	font-size:15px;
+}
+
+#news .title {
+	text-align:center;
+	font-size:18px;
+	margin-bottom:6px;
+}
+
+#news a {
+	color:#ffe834;
+}
+
+#news a:hover {
+	color:#a9ec24;
+}
+
+
+
+/**
+ *
+ * Tutorial
+ *
+ */
+#tutorial {
+	font-size:22px;
+	text-align:center;
+	padding:10px;
+	width:100%;
+}
+
+#tutorial video {
+	width:320px;
+	height:240px;
+	border:2px solid #000;
+	display: inline-block;
+}
+
+
+/**
+ *
+ * Imgs
+ *
+ */
+@media only screen and (-webkit-max-device-pixel-ratio: 1), only screen and (max-device-pixel-ratio: 1) {
+
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+	#gateLeft, #gateRight {
+		background: url(../images/tablet/h-engrave@2x.png?v2) 0 0 no-repeat,
+			url(../images/desktop/seamless-wood-small.jpg?v2) 0 0 repeat;
+	}
+
+	#gameover li,
+	#logo li {
+		background-image: url(../images/tablet/logo@2x.png?v2);
+	}
+
+	#mainmenu {
+		background: url(../images/tablet/mainmenu-bg@2x.png?v1) 0 0 no-repeat,
+			url(../images/desktop/seamless-wood-small-dark.jpg?v2) 0 0 repeat;
+	}
+
+	.landscape #mainmenu {
+		background: url(../images/tablet/mainmenu-landscape-bg@2x.png?v1) 0 0 no-repeat,
+			url(../images/desktop/seamless-wood-small-dark.jpg?v2) 0 0 repeat;
+	}
+
+	.button {
+		background: url(../images/tablet/buttons@2x.png?v2) 0 0 no-repeat;
+	}
+
+	#levelProgressOverlay {
+		background:url(../images/tablet/levelup-overlay@2x.png?v2) 0 -38px no-repeat;
+	}
+
+	#swapSlots li {
+		background:url(../images/tablet/swaps-overlay@2x.png?v1) 0 0 no-repeat,
+			-webkit-linear-gradient(top, #7ee891, #2c5832) -24px 0 no-repeat;
+		background:url(../images/tablet/swaps-overlay@2x.png?v1) 0 0 no-repeat,
+			-moz-linear-gradient(top, #7ee891, #2c5832) -24px 0 no-repeat;
+		background:url(../images/tablet/swaps-overlay@2x.png?v1) 0 0 no-repeat,
+			-ms-linear-gradient(top, #7ee891, #2c5832) -24px 0 no-repeat;
+		background:url(../images/tablet/swaps-overlay@2x.png?v1) 0 0 no-repeat,
+			-o-linear-gradient(top, #7ee891, #2c5832) -24px 0 no-repeat;
+		background:url(../images/tablet/swaps-overlay@2x.png?v1) 0 0 no-repeat,
+			linear-gradient(top, #7ee891, #2c5832) -24px 0 no-repeat;
+	}
+
+	.tileButton,
+	.tile {
+		background: url(../images/tablet/tiles@2x.png?v6) 0 0 no-repeat;
+	}
+
+	.tileButton {
+		background: url(../images/tablet/tile-button@2x.png?v4) 0 0 no-repeat;
+	}
+
+	.landscape .tile {
+		background: url(../images/tablet/tiles@2x.png?v6) 0 0 no-repeat;
+	}
 }

@@ -6,7 +6,6 @@ HEXA.DragDrop = (function () {
 		render = HEXA.render,
 
 		// Event names
-		eventStart,
 		eventMove,
 		eventEnd,
 		eventCancel;
@@ -18,7 +17,6 @@ HEXA.DragDrop = (function () {
 	*/
 	function DragDrop (board, draggable, droppable, pageX, pageY, onCompletion, isHexMap) {
 		// Event names
-		eventStart = parms.hasTouch ? 'touchstart' : 'mousedown';
 		eventMove = parms.hasTouch ? 'touchmove' : 'mousemove';
 		eventEnd = parms.hasTouch ? 'touchend' : 'mouseup';
 		eventCancel = parms.hasTouch ? 'touchcancel' : 'mousecancel';
@@ -55,6 +53,7 @@ HEXA.DragDrop = (function () {
 		dropCandidate: null,
 
 		handleEvent: function (e) {
+
 			switch (e.type) {
 				case eventMove:
 					this.__move(e);
@@ -89,8 +88,8 @@ HEXA.DragDrop = (function () {
 		},
 	
 		__pos: function (x, y) {
-			x -= this.offsetX;
-			y -= this.offsetY;
+			x -= this.offsetX + 20;
+			y -= this.offsetY + 20;
 
 			utils.translate(this.draggable, x, y);
 		},

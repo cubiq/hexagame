@@ -25,6 +25,9 @@ HEXA.leaderboard = (function (w) {
 		switchesEl = $.all('#chartSelect .switch');
 		buttonEl = $.id('chartsBack');
 
+		$.id('news').style.display = 'none';
+		$.id('loginMonitor').style.display = 'none';
+
 		leaderboardEl.style.left = '0';
 		utils.translate(chartsEl, chartsEl.offsetWidth + chartsEl.offsetLeft, 0);
 		utils.translate(chartSelectEl, -chartsEl.offsetWidth - chartsEl.offsetLeft, 0);
@@ -255,6 +258,10 @@ HEXA.leaderboard = (function (w) {
 				utils.translate(chartSelectEl, 0, 0);
 				tableWrapperEl.innerHTML = '';
 				HEXA.mainmenu.openGate();
+				setTimeout(function () {
+					$.id('news').style.display = 'block';
+					$.id('loginMonitor').style.display = 'block';
+				}, 100);
 			}
 		});
 

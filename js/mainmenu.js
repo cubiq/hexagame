@@ -36,9 +36,20 @@ HEXA.mainmenu = (function (w) {
 
 			tapSignin = new HEXA.Tap(loginMonitorEl);
 			utils.bind(loginMonitorEl, 'tap', signout);
-		}
 
-		parms.nowPlaying = 'mainmenu';
+			// Get the latest news
+			utils.ajax('req/news.php', {
+				callback: function (result) {
+					if ( !result ) return;
+					result = w.JSON.parse(result);
+					if ( result.status == 'error' ) return;
+
+					var news = $.id('news');
+					news.style.display = 'block';
+					news.innerHTML = '<span class="title">~ News ~</span><span>' + result.date + ': <a href="' + result.href + '">' + result.title + '</a></span>';
+				}
+			});
+		}
 
 		logoTilesStartY = (logoTilesEl[0].offsetTop - logoTilesEl[0].offsetHeight - logoTilesEl[0].parentNode.offsetTop);
 
@@ -264,11 +275,11 @@ HEXA.mainmenu = (function (w) {
 	}
 
 	function about () {
-		var content = '<div id="aboutPopup"><p>Hexagame is an Open Source HTML5 game by Matteo <a href="http://cubiq.org">Cubiq</a> Spinelli.</p><p>Fork and send bug reports on <a href="https://github.com/cubiq/hexagame">Github</a>.</p><div id="aboutClose" class="button action">Close</div></div>';
+		var content = '<div id="aboutPopup"><p>Hexagame is an Open Source HTML5 game by Matteo <a href="http://cubiq.org">Cubiq</a> Spinelli.</p><p>Fork on <a href="https://github.com/cubiq/hexagame">Github</a>, send comments and suggestions on the official <a href="http://blog.hexaga.me">blog</a>.</p><div id="aboutClose" class="button action">Close</div></div>';
 
 		HEXA.popup.show({
 			width: 620,
-			height: 340,
+			height: 380,
 			content: content,
 			duration: 400,
 			easing: HEXA.easing.quadraticOut,

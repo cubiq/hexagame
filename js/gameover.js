@@ -16,17 +16,20 @@ HEXA.gameover = (function (w) {
 		var content = '<ul id="gameover"><li class="logoG">G</li><li class="logoA">A</li><li class="logoM">M</li><li class="logoE">E</li><li class="logoO">O</li><li class="logoV">V</li><li class="logoE">E</li><li class="logoR">R</li></ul>',
 			currentScore = scoreboard.getScore(),
 			highScore = userinfo.getHighScore(),
+			level = scoreboard.getLevel(),
 			width, height;
 
 		onCompletion = function () { setTimeout(callback, 300); };
 
 		if ( currentScore !== 0 ) userinfo.completeGame();
 
+		if ( level > 1 ) userinfo.setLevel(level);
+
 		content += '<div id="gameResult">Your final score is <strong>' + utils.formatNumber(currentScore) + '</strong>!<br>';
 
 		if ( currentScore > highScore ) {
 			content += 'Congratulations, this is your best result so far.';
-			userinfo.setHighScore(currentScore);
+			userinfo.setHighScore(level);
 		} else if ( currentScore === 0 ) {
 			content += 'Oh c\'mon, you did\'t even try!';
 		} else if ( currentScore == highScore ) {

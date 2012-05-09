@@ -1,19 +1,21 @@
-HEXA.popup = (function () {
+HEXA.popup = (function (w) {
 	var // Libs
 		utils = HEXA.utils;
 	
 	function show (options) {
 		var popupEl = $.id('popup'),
-			container = $('#popup > div');
+			container = $('#popup > div'),
+			width = options.width,
+			height = options.height;
 
 		$.id('popupCloak').style.display = 'block';
 
 		if ( options.className ) utils.addClass(popupEl, options.className);
 		popupEl.style.left = '50%';
-		popupEl.style.width = options.width + 'px';
-		popupEl.style.height = options.height + 'px';
-		popupEl.style.marginLeft = -Math.round(options.width / 2) + 'px';
-		popupEl.style.marginTop = -Math.round(options.height / 2) + 'px';
+		popupEl.style.width = width + 'px';
+		popupEl.style.height = height + 'px';
+		popupEl.style.marginLeft = -Math.round(width / 2) + 'px';
+		popupEl.style.marginTop = -Math.round(height / 2) + 'px';
 		utils.translate(popupEl, 0, -popupEl.offsetHeight - popupEl.offsetTop);
 		container.innerHTML = options.content || '';
 
@@ -49,4 +51,4 @@ HEXA.popup = (function () {
 		hide: hide
 	};
 
-})();
+})(this);
