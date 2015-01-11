@@ -134,7 +134,7 @@ If you want to contribute with other languages please follow these rules:
 
 ## Quick reference to build a local working environment
 
-1. Download the [wordlist](http://hexaga.me/dict/wordlist.zip), unzip and place it in the `dict` folder.
+1. Download the [wordlist](http://lab.cubiq.org/wordlist.zip), unzip and place it in the `dict` folder.
 2. Rename `config-test.php` to `config.php`.
 3. Add audio files in the Audio folder (not provided in this repo)
 
