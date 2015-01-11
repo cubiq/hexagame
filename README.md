@@ -1,8 +1,6 @@
 # Hexagame Word Puzzle
 
-**Hexagame** is an Open Source HTML5 word game developed by [Matteo Spinelli](http://cubiq.org/). You can play the latest version live at:
-
-**<http://hexaga.me>**
+**Hexagame** is an Open Source HTML5 word game developed by [Matteo Spinelli](http://cubiq.org/).
 
 ## Basic rules
 
